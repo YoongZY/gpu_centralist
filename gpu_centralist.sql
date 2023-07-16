@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2023 at 02:22 AM
+-- Generation Time: Jul 16, 2023 at 04:51 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -37,9 +37,9 @@ CREATE TABLE `jenama` (
 --
 
 INSERT INTO `jenama` (`idjenama`, `namaJenama`) VALUES
-(1, 'NVIDIA'),
 (2, 'Intel'),
-(4, 'AMD');
+(4, 'AMD'),
+(5, 'NVIDIA');
 
 -- --------------------------------------------------------
 
@@ -87,7 +87,9 @@ CREATE TABLE `produk` (
 INSERT INTO `produk` (`idproduk`, `namaProduk`, `idjenama`, `harga`, `deskripsi`, `gambar`, `pautanpembelian`, `markahpenilaian`) VALUES
 (5, 'asdsa', 4, 123, 'dadadaw', '5c4735e0a20c56ccd344f6a5873fc494jpg', 'www.21231232.com', 12),
 (8, 'aaaa', 2, 30, 'saddasdad', '91f20b4ee7ce9b62c58851217f1322bcjpg', 'www.google.com', 55),
-(9, 'qqq', 4, 4565, 'adasdasd', '22ca1f6feb71b8072be969a4dcbb4458jpg', 'www.youtube.com', 77);
+(9, 'qqq', 4, 4565, 'adasdasd', '22ca1f6feb71b8072be969a4dcbb4458jpg', 'www.youtube.com', 77),
+(10, 'qwerty', 5, 1232, 'wqdasdas', '4193a49f26bd6e60c934a92709eff0f8jpg', 'www.youtube.com', 90),
+(11, 'hello', 4, 123, 'qdwadsadsa', 'b1fc5e0efbc47c61097eb0863837fd67jpg', 'www.pornhub.com', 8);
 
 -- --------------------------------------------------------
 
@@ -106,7 +108,18 @@ CREATE TABLE `rekod_pilihan` (
 --
 
 INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
-(20, '1', 5);
+(20, '1', 5),
+(29, '1', 8),
+(32, '1', 8),
+(23, '1', 9),
+(24, '1', 9),
+(25, '1', 9),
+(26, '1', 9),
+(27, '1', 9),
+(28, '1', 9),
+(30, '1', 9),
+(31, '1', 9),
+(33, '1', 11);
 
 --
 -- Indexes for dumped tables
@@ -147,19 +160,19 @@ ALTER TABLE `rekod_pilihan`
 -- AUTO_INCREMENT for table `jenama`
 --
 ALTER TABLE `jenama`
-  MODIFY `idjenama` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idjenama` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `idproduk` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idproduk` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Constraints for dumped tables
