@@ -4,7 +4,6 @@
     if(isset($_POST['submit'])) {
         $idproduk = $_POST['idproduk'];
         $pengguna = $_POST['idaccount'];
-        $jenama = $_POST['idjenama'];
         # masuk rekod into table
         $baharu = "INSERT INTO rekod_pilihan VALUES (NULL, '$pengguna', '$idproduk')";
         #laksana SQL

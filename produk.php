@@ -86,7 +86,6 @@
                         <form method="POST" action="pilihan_simpan.php">
                             <input type="text" name="idproduk" value="<?php echo $info1['idproduk']; ?>" hidden>
                             <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
-                            <input type="text" name="idjenama" value="<?php echo $info1['idjenama']; ?>" hidden>
                             <button name="submit" type="submit"> PILIH </button>
                         </form>
                     </p>

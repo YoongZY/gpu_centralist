@@ -7,7 +7,7 @@
     </div>
     <div id="isi">
         <center>
-            <h2>IMPORT JENAMA DARI FAIL CSV</h2>
+            <h2>Import Jenama dari Fail CSV</h2>
         </center>
         <label> Pilih lokasi fail CSV/Excel</label>
         <!-- upload fail CSV-->

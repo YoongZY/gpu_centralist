@@ -30,7 +30,7 @@
                         <p>
                             <form method="POST" action="pilihan_simpan.php">
                                 <input type="text" name="idproduk" value="<?php echo $senarai_jenama['idproduk']; ?>" hidden>
-                                <input type="text" name="idaccount" value="<?php echo $_SESSION['nama']; ?>" hidden>
+                                <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
                                 <button name="submit" type="submit"> PILIH </button>
                             </form>
                         </p>

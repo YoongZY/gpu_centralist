@@ -38,7 +38,7 @@ $selectedBrandsString = implode(',', $selectedBrands);
             echo '<div class="card-container">'; // Container for the card divs
 
             while ($senarai_jenama = mysqli_fetch_assoc($papar_query_jenama)) {
-                $isChecked = in_array($senarai_jenama['idjenama'], $selectedBrands);
+                $isChecked = in_array($senarai_jenama['idjenama'], $selectedBrands) ? 'checked' : '';
                 ?>
                 <div class="card">
                     <div class="gambar">
@@ -49,6 +49,7 @@ $selectedBrandsString = implode(',', $selectedBrands);
                     <p class="price">RM <?php echo $senarai_jenama['harga'] ?></p>
                     <p>
                         <form method="POST" action="pilihan_simpan.php">
+                            <input type="hidden" name="brands" value="<?php echo $selectedBrandsString; ?>">
                             <input type="text" name="idproduk" value="<?php echo $senarai_jenama['idproduk']; ?>" hidden>
                             <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
                             <button name="submit" type="submit">PILIH</button></a>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2023 at 04:51 PM
+-- Generation Time: Jul 17, 2023 at 02:30 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -111,6 +111,9 @@ INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
 (20, '1', 5),
 (29, '1', 8),
 (32, '1', 8),
+(34, '1', 8),
+(35, '1', 8),
+(40, '1', 8),
 (23, '1', 9),
 (24, '1', 9),
 (25, '1', 9),
@@ -119,6 +122,9 @@ INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
 (28, '1', 9),
 (30, '1', 9),
 (31, '1', 9),
+(36, '1', 10),
+(41, '1', 10),
+(42, '1', 10),
 (33, '1', 11);
 
 --
@@ -172,7 +178,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- Constraints for dumped tables
