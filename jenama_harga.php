@@ -11,7 +11,7 @@ if (isset($_POST['brands'])) {
 
 if (isset($_POST['pilih'])) {
     if (empty($_POST['harga1']) || empty($_POST['harga2'])) {
-        echo "<script>alert('Taip julat harga'); window.location='dashboard.php'</script>";
+        echo "<script>alert('Sila masukkan julat harga'); window.location='dashboard.php'</script>";
     } else {
         $pilih1 = $_POST['harga1'];
         $pilih2 = $_POST['harga2'];

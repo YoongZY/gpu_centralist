@@ -22,7 +22,7 @@
                 <button type="reset"> PADAM </button>
                 <button onclick="history.back()"> BALIK </button>
             </div>
-            <font color='green'> Pastikan maklumat anda betul sebelum hantar </font>
+            <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
         </form></center>
     </body>
 </div>

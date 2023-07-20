@@ -15,7 +15,6 @@
                 <td>Bil</td>
                 <td>Nama Jenama</td>
                 <td>Tindakan
-                    <a href="jenama_tambah.php" style="float:right;"> &#10133 </a>   
                     <a href="import.php" style="float:right;"> 📥 </a>
                 </td>
             </tr>

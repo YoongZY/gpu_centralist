@@ -1,5 +1,6 @@
 <?php include 'header.php'; ?>
 <html>
+<script src="print_util.js"></script>
 <div id="menu"> <!-- call menu -->
     <?php include 'menu2.php'; ?>
 </div>
@@ -39,7 +40,7 @@
                     <font style='font-size:12px'>~~~~~Senarai Tamat~~~~~<br>
                         Jumlah Pilihan : <?php echo $no-1; ?>
                     </font>
-                    <p><button onclick="javascript:window.print()"> CETAK </button></P>
+                    <p><button onclick="printDiv('isi')"> CETAK </button></p>
                 </center></td>
             </tr>
         </table>

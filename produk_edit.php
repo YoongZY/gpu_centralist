@@ -37,15 +37,13 @@
             </p>
 
             <p>Deskripsi Produk <br>
+            <font color='crimson'>* Pastikan anda tidak mengecualikan < br > </font><br>
             <textarea name="deskripsi" rows="10" cols="50" required><?php echo $qProduk['deskripsi'] ?></textarea>
             </p>
 
             <p>Gambar Produk <br>
             <img src="gambar/<?php echo $qProduk['gambar']; ?>" width="30%" height="auto"><br>
-            <?php $default = $qProduk['gambar'];
-            if( $default == ""){
-                $default = $qProduk['gambar'];
-            } ?>
+            <?php $default = $qProduk['gambar'];?>
             Tukar Gambar: <input type="file" name="gambar" accept=".jpg,.jpeg,.png" value="$default";>
             </p>
 
@@ -54,18 +52,18 @@
             </textarea>
             </p>
 
-            <p>Markah Penilaian Produk <br>
-            <input type="text" name="markah" value=<?php echo $qProduk['markahpenilaian']; ?> maxlength="3" size="45" required> /100
+            <p>Markah G3D Produk <br>
+            <input type="text" name="markah" value=<?php echo $qProduk['markahpenilaian']; ?> size="45" required>
             </p>
 
             <input type="text" name="id" value="<?php echo $qProduk['idproduk']; ?>" hidden>
             <br>
 
-            <button name="submit" type="submit"> SIMPAN </button></form>
+            <button name="submit" type="submit"> SIMPAN </button>
             <button onclick="history.back()"> BALIK </button>
             <br>
-            <font color='red'> * Pastikan Maklumat Dimasukkan Betul </font>
-        <!--</form>-->
+            <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
+        </form>
     </body>
 </div>
 </html>

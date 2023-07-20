@@ -28,7 +28,7 @@ $selectedBrandsString = implode(',', $selectedBrands);
             $query_jenama .= " WHERE t1.idjenama IN ($selectedBrandsString)";
         }
         
-        $query_jenama .= " ORDER BY t2.namaProduk ASC";
+        $query_jenama .= " ORDER BY t2.markahpenilaian DESC";
 
         $papar_query_jenama = mysqli_query($connect, $query_jenama);
 
@@ -46,6 +46,7 @@ $selectedBrandsString = implode(',', $selectedBrands);
                     </div>
                     <h3><?php echo $senarai_jenama['namaProduk']; ?></h3>
                     <p class="price">Jenama : <?php echo $senarai_jenama['namaJenama']; ?></p>
+                    <p class="price">G3D : <?php echo $senarai_jenama['markahpenilaian'] ?></p>
                     <p class="price">RM <?php echo $senarai_jenama['harga'] ?></p>
                     <p>
                         <form method="POST" action="pilihan_simpan.php">

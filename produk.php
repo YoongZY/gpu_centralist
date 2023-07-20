@@ -1,6 +1,7 @@
 <?php include 'header.php'; ?>
 <html>
 <meta charset="UTF-8">
+<script src="print_util.js"></script>
 <!-- call menu -->
 <div id="menu">
     <?php include 'menu2.php'; ?>
@@ -22,7 +23,7 @@
                 <td>Deskripsi</td>
                 <td>Gambar</td>
                 <td>Pautan Pembelian</td>
-                <td>Markah Penilaian</td>
+                <td>Markah G3D</td>
                 <td>Tindakan</td>
             </tr>
 
@@ -50,7 +51,7 @@
                     <font style = "font-size:12px">~~~~~Senarai Tamat~~~~~<br />
                         Jumlah Produk : <?php echo $no-1; ?>
                     </font>
-                    <p><button onclick="javascript:window.print()"> CETAK </button></p>
+                    <p><button onclick="printDiv('isi')"> CETAK </button></p>
                 </center></td>
             </tr>
             </table>
@@ -67,7 +68,7 @@
                 <td>Jenama</td>
                 <td>Harga</td>
                 <td>Gambar</td>
-                <td>Markah Penilaian</td>
+                <td>Markah G3D</td>
                 <td></td>
             </tr>
 
@@ -98,7 +99,7 @@
                     <font style = "font-size:12px">~~~~~Senarai Tamat~~~~~<br />
                         Jumlah Produk : <?php echo $no-1; ?>
                     </font>
-                    <p><button onclick="javascript:window.print()"> CETAK </button></p>
+                    <p><button onclick="printDiv('isi')"> CETAK </button></p>
                 </center></td>
             </tr>
             </table>

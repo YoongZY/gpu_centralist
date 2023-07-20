@@ -5,6 +5,7 @@
     $qProduk = mysqli_fetch_array($dataProduk);
 ?>
 <html>
+<script src="print_util.js"></script>
 <div id="menu">
     <?php include "menu2.php"; ?>
 </div>
@@ -14,12 +15,13 @@
         <img src="gambar/<?php echo $qProduk['gambar']; ?>" width="40%" height="auto">
         <h2><?php echo $qProduk['namaProduk']; ?></h2>
         <p class="jenama"><b><?php echo $qProduk['namaJenama']; ?></b></p>
-        <p class="harga">RM <?php echo $qProduk['harga']; ?></p>
-        <p class="deskripsi"><?php echo $qProduk['deskripsi']; ?></p>
+        <p class="price"><b>Markah G3D: </b><?php echo $qProduk['markahpenilaian']; ?></p>
+        <p class="price"><?php echo $qProduk['deskripsi']; ?></p>
+        <p class="price"><b>RM <?php echo $qProduk['harga']; ?></b></p>
         <br>
-        <p class="pautan">Pautan Pembelian : <a href="https://<?php $qProduk['pautanpembelian']; ?>"><?php echo $qProduk['pautanpembelian']; ?></a></p>
+        <p class="price">Pautan Pembelian : <a href="https://<?php $qProduk['pautanpembelian']; ?>"><?php echo $qProduk['pautanpembelian']; ?></a></p>
         <p>
-            <button onclick="javascript:window.print()"> CETAK </button>
+            <button onclick="printDiv('isi')"> CETAK </button>
             <button onclick="history.back()"> BALIK </button>
         </p>
     </body>

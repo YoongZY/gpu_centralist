@@ -8,9 +8,9 @@ if(isset($_POST['submit'])){
     $barangan = mysqli_query($connect, $baharu);
     #feedback
     if($barangan){
-        echo "<script> alert ('Penambahan Jenama Berjaya'); window.location='jenama.php'</script>";
+        echo "<script> alert ('Penambahan Jenama BERJAYA'); window.location='jenama.php'</script>";
     }else{
-        echo "<script> alert ('Penambahan Jenama Gagal'); window.location='jenama_tambah.php'</script>";
+        echo "<script> alert ('Penambahan Jenama GAGAL'); window.location='jenama_tambah.php'</script>";
     }
 }
 ?>

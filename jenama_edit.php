@@ -12,7 +12,7 @@
 
 <div id="isi">  <!--papar isi-->
     <head>
-        <h2 style="text-align:center"> EDIT JENAMA </h2>
+        <h2 style="text-align:center"> Edit Jenama </h2>
     </head>
     <body>
         <form method="POST" action="jenama_kemaskini.php">
@@ -22,7 +22,7 @@
             <br>
             <button name="submit" type="submit"> SIMPAN </button>
             <br>
-            <font color='red'> * Pastikan maklumat sudah betul</font>
+            <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
         </form>
     </body>
 </div>

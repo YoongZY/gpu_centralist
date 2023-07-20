@@ -11,9 +11,9 @@ if (isset($_POST['username'])){
     $hasil1 = mysqli_query($connect,$daftar1);
 
     if($hasil1){    //notification
-        echo "<script> alert ('Pendaftaran Berjaya'); window.location='index1.php'</script>";
+        echo "<script> alert ('Pendaftaran BERJAYA'); window.location='index.php'</script>";
     }else{
-        echo "<script> alert ('Pendaftaran Gagal, Sila semak semula maklumat'); window.location='signup.php'</script>";
+        echo "<script> alert ('Pendaftaran GAGAL. Sila daftar sekali lagi selepas sistem dibaiki'); window.location='signup.php'</script>";
     }
 }
 ?>

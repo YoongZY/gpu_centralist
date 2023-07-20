@@ -15,7 +15,7 @@ if (isset($_POST['username'])){
         $_SESSION ['level'] = $row['Aras'];
         header("location: dashboard.php");
     }else{
-        echo "<script> alert('ID Pengguna atau Password salah'); window.location='index1.php'</script>";
+        echo "<script> alert('ID pengguna atau kata laluan salah'); window.location='index.php'</script>";
     }
 }
 ?>

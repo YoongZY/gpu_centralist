@@ -6,5 +6,5 @@
     unlink("gambar/".$idpic);
     mysqli_query($connect,"DELETE FROM produk WHERE idproduk='$iddel'");
 
-    echo "<script> alert('Hapusan Produk Berjaya');window.location='produk.php'</script>";
+    echo "<script> alert('Penghapusan Produk BERJAYA');window.location='produk.php'</script>";
 ?>

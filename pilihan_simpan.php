@@ -12,7 +12,7 @@
         if ($pilihan) { #mesej
             echo "<script> window.location='produk_detail.php ? idproduk=$idproduk'</script>";
         }else{
-            echo "<script> alert('Pilihan Gagal direkodkan'); window.location:'dashboard.php' </script>";
+            echo "<script> alert('Pilihan GAGAL direkodkan'); window.location:'dashboard.php' </script>";
         }
     }
 ?>

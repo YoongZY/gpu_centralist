@@ -24,6 +24,8 @@
                             <img src="gambar/<?php echo $senarai_jenama['gambar']; ?>" width="auto" height="120px">
                         </div>
                         <h3><?php echo $senarai_jenama['namaProduk']; ?></h3>
+                        <p class="price">Jenama : <?php echo $senarai_jenama['namaJenama']; ?></p>
+                        <p class="price">G3D : <?php echo $senarai_jenama['markahpenilaian']; ?></p>
                         <p class="price">RM <?php echo $senarai_jenama['harga']; ?></p>
 
                         <!-- simpan ke table pilihan -->

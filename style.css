@@ -16,7 +16,7 @@
 /*produk card display*/
 .card {
     padding: 10px;
-    max-width: 200px;
+    max-width: 150px;
     margin: 10px;
     text-align: center;
     box-sizing: border-box;
@@ -26,15 +26,14 @@
 .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 20px;
+    grid-gap: 15px;
     justify-items: center;
     box-sizing: border-box;
 }
 
 /*produk photo frame*/
 .gambar {
-    height: 120px;
-    width: 100%;
+    width: 150px;
     border: thin solid black;
 }
 
@@ -44,7 +43,7 @@
     height: 140px;
     position: sticky;
     top: 0px;
-    background-image: url('gambar/banner1.png');
+    background-image: url('gambar/system/banner1.png');
     background-size: cover;
     text-align: left;
     padding-left: 0%;
@@ -88,7 +87,7 @@ button{
 
 /*body background*/
 body{
-    background-image: url("back.png");
+    background-image: url("gambar/system/back.png");
     height: 100%;
     background-size: cover;
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2023 at 02:30 PM
+-- Generation Time: Jul 20, 2023 at 05:45 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -73,7 +73,7 @@ CREATE TABLE `produk` (
   `idproduk` int(5) NOT NULL,
   `namaProduk` varchar(150) NOT NULL,
   `idjenama` int(3) NOT NULL,
-  `harga` int(10) DEFAULT NULL,
+  `harga` varchar(10) DEFAULT NULL,
   `deskripsi` varchar(255) DEFAULT NULL,
   `gambar` varchar(255) DEFAULT NULL,
   `pautanpembelian` varchar(255) DEFAULT NULL,
@@ -85,11 +85,10 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`idproduk`, `namaProduk`, `idjenama`, `harga`, `deskripsi`, `gambar`, `pautanpembelian`, `markahpenilaian`) VALUES
-(5, 'asdsa', 4, 123, 'dadadaw', '5c4735e0a20c56ccd344f6a5873fc494jpg', 'www.21231232.com', 12),
-(8, 'aaaa', 2, 30, 'saddasdad', '91f20b4ee7ce9b62c58851217f1322bcjpg', 'www.google.com', 55),
-(9, 'qqq', 4, 4565, 'adasdasd', '22ca1f6feb71b8072be969a4dcbb4458jpg', 'www.youtube.com', 77),
-(10, 'qwerty', 5, 1232, 'wqdasdas', '4193a49f26bd6e60c934a92709eff0f8jpg', 'www.youtube.com', 90),
-(11, 'hello', 4, 123, 'qdwadsadsa', 'b1fc5e0efbc47c61097eb0863837fd67jpg', 'www.pornhub.com', 8);
+(15, 'GeForce RTX 4090', 5, '8400', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2230 MHz <br> Memory Size: 24 GB <br> Memory Type: GDDR6X <br> DirectX: 12 <br> OpenGL: 4.6 <br> Release Date: 12/10/2022', '20230720_171048.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4090/                                    ', 39087),
+(16, 'GeForce RTX 4080', 5, '6300', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2205 MHz <br> Memory Size: 16 GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 20/09/2022', '20230720_171158.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4080/                        ', 35017),
+(17, 'Radeon PRO W7800', 4, 'NA', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855 MHz <br> Memory Size: 32 GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 13/04/2023', '20230720_171935.jpg', 'NA            ', 32146),
+(18, 'GeForce RTX 4070 Ti', 5, '3959', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2310MHz <br> Memory Size: 12GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/01/2023', '20230720_173011.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4070-4070ti/', 31668);
 
 -- --------------------------------------------------------
 
@@ -102,30 +101,6 @@ CREATE TABLE `rekod_pilihan` (
   `idaccount` varchar(255) NOT NULL,
   `idproduk` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `rekod_pilihan`
---
-
-INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
-(20, '1', 5),
-(29, '1', 8),
-(32, '1', 8),
-(34, '1', 8),
-(35, '1', 8),
-(40, '1', 8),
-(23, '1', 9),
-(24, '1', 9),
-(25, '1', 9),
-(26, '1', 9),
-(27, '1', 9),
-(28, '1', 9),
-(30, '1', 9),
-(31, '1', 9),
-(36, '1', 10),
-(41, '1', 10),
-(42, '1', 10),
-(33, '1', 11);
 
 --
 -- Indexes for dumped tables
@@ -166,19 +141,19 @@ ALTER TABLE `rekod_pilihan`
 -- AUTO_INCREMENT for table `jenama`
 --
 ALTER TABLE `jenama`
-  MODIFY `idjenama` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idjenama` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `idproduk` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idproduk` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables

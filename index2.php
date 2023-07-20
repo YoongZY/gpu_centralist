@@ -1,10 +1,10 @@
 <?php
 	if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
-		$uri = 'https://';
+		$url = 'https://';
 	} else {
-		$uri = 'http://';
+		$url = 'http://';
 	}
-	$uri .= $_SERVER['HTTP_HOST'];
-	header('Location: '.$uri.'/dashboard/');
+	$url .= $_SERVER['HTTP_HOST'];
+	header('Location: '.$url.'/dashboard/');
 	exit;
 ?>

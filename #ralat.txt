@@ -3,14 +3,15 @@ Error:
 - $_GET['id'] problem [produk_edit///|jenama_harga///] 			{solved}
 - something else i cant understand when launch lol [jenama_harga] 	{solved}
 - after pilih no forward to produk_detail.php [pilihan_simpan.php]	{solved}
-- no update in database [produk_kemaskini.php]
-- csv import (saya tak tahu boleh work or not)
+- no update in database [produk_kemaskini.php]				{solved}
+- csv import only 1st entry imported					
 
 Questions:
 - dashboard welcome card how to make horizontal depending size of screen [welcome.php]				{solved}
 - how to have optional gambar upload in edit 									{solved}
-- how to combine inputs into 1 text to be uploaded into database [produk_simpan|produk_edit]			
+- gambar not have proper file type										{solved}
+- how to combine inputs into 1 text to be uploaded into database [produk_simpan|produk_edit]			{solved}
 - how integrate namaJenama into rekod_pilihan [database problem?] 						{solved}
 - how to remake light/dark & zoom mode so can save setting [utility.php]					{on halt}
-- how to print specific div when click CETAK									
-- how to show checkmark on jenama_menu after go into jenama_harga (solve b4 jenama_pilihan but now dk how)	
+- how to print specific div when click CETAK									{solved}
+- how to show checkmark on jenama_menu after go into jenama_harga (solve b4 in jenama_pilihan but now dk how)	
