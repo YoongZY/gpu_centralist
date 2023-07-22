@@ -12,12 +12,12 @@
         </center>
         <table class="table">
             <tr id="row1">
-                <td>BIL</td>
-                <td>NAMA PRODUK</td>
-                <td>JENAMA</td>
-                <td>HARGA</td>
-                <td>GAMBAR</td>
-                <td>BILANGAN</td>
+                <td>Bil</td>
+                <td>Nama Produk</td>
+                <td>Jenama</td>
+                <td>Harga</td>
+                <td>Gambar</td>
+                <td>Bilangan</td>
             </tr>
             <?php
             $no=1;
@@ -29,15 +29,16 @@
                     <td><?php echo $info1['namaProduk']; ?></td>
                     <td><?php echo $info1['namaJenama']; ?></td>
                     <td>RM <?php echo $info1['harga']; ?></td>
-                    <td width="200px"><img src="gambar/<?php echo $info1['gambar']; ?>" width="auto" height="120px"></td>
+                    <td><img class="gambar" src="gambar/<?php echo $info1['gambar']; ?>"></td>
                     <td><?php echo $info1['kira']; ?></td>
                 </tr>
             <?php $no++;
             }
             ?>
-            <tr>
+            <tr id="row1">
                 <td colspan="6"><center>
-                    <font style='font-size:12px'>~~~~~Senarai Tamat~~~~~<br>
+                    <br>
+                    <font style='font-size:12px'>~~~~~ Senarai Tamat ~~~~~<br>
                         Jumlah Pilihan : <?php echo $no-1; ?>
                     </font>
                     <p><button onclick="printDiv('isi')"> CETAK </button></p>

@@ -12,14 +12,14 @@
 <div id="isi">
     <body>
         <center><h2> Deskripsi Produk </h2></center>
-        <img src="gambar/<?php echo $qProduk['gambar']; ?>" width="40%" height="auto">
-        <h2><?php echo $qProduk['namaProduk']; ?></h2>
+        <img class="gambar2" src="gambar/<?php echo $qProduk['gambar']; ?>">
+        <font color="darkblue"><h2><?php echo $qProduk['namaProduk']; ?></h2></font>
         <p class="jenama"><b><?php echo $qProduk['namaJenama']; ?></b></p>
-        <p class="price"><b>Markah G3D: </b><?php echo $qProduk['markahpenilaian']; ?></p>
+        <p style="color:crimson" class="price"><b>Markah G3D: </b><?php echo $qProduk['markahpenilaian']; ?></p>
         <p class="price"><?php echo $qProduk['deskripsi']; ?></p>
         <p class="price"><b>RM <?php echo $qProduk['harga']; ?></b></p>
         <br>
-        <p class="price">Pautan Pembelian : <a href="https://<?php $qProduk['pautanpembelian']; ?>"><?php echo $qProduk['pautanpembelian']; ?></a></p>
+        <p class="price">Pautan Pembelian : <a href="<?php $qProduk['pautanpembelian']; ?>"><?php echo $qProduk['pautanpembelian']; ?></a></p>
         <p>
             <button onclick="printDiv('isi')"> CETAK </button>
             <button onclick="history.back()"> BALIK </button>

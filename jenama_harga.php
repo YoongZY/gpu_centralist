@@ -36,7 +36,7 @@ if (isset($_POST['pilih'])) {
             </div>
             <div id="isi">
                 <head>
-                    <h2 style="text-align:center"> Senarai Produk Mengikut Pilihan Harga & Jenama </h2>
+                    <h2 style="text-align:center"> Senarai Produk Mengikut Jenama & Pilihan Harga </h2>
                 </head>
                 <body>
                 <?php
@@ -50,9 +50,7 @@ if (isset($_POST['pilih'])) {
                     ?>
                     <!-- papar produk -->
                     <div class="card">
-                        <div class="gambar">
-                            <img src="gambar/<?php echo $senarai_produk['gambar']; ?>" width="auto" height="120">
-                        </div>
+                        <img class="gambar" src="gambar/<?php echo $senarai_produk['gambar']; ?>">
                         <h3><?php echo $senarai_produk['namaProduk']; ?></h3>
                         <p class="price">Jenama : <?php echo $senarai_produk['namaJenama']; ?></p>
                         <p class="price">RM <?php echo $senarai_produk['harga']; ?></p>

@@ -22,7 +22,7 @@
                 <td>Harga</td>
                 <td>Deskripsi</td>
                 <td>Gambar</td>
-                <td>Pautan Pembelian</td>
+                <td id="shrinktd">Pautan</td>
                 <td>Markah G3D</td>
                 <td>Tindakan</td>
             </tr>
@@ -36,8 +36,8 @@
                 <td><?php echo $info1['namaJenama']; ?></td>
                 <td>RM <?php echo $info1['harga']; ?></td>
                 <td><?php echo $info1['deskripsi']; ?></td>
-                <td width="200px"><img src="gambar/<?php echo $info1['gambar']; ?>" width="auto" height="120px"></td>
-                <td><?php echo $info1['pautanpembelian']; ?></td>
+                <td><img class="gambar" src="gambar/<?php echo $info1['gambar']; ?>"></td>
+                <td id="shrinktd"><?php echo $info1['pautanpembelian']; ?></td>
                 <td><?php echo $info1['markahpenilaian']; ?></td>
                 <td><!-- papar icon link -->
                     <a href="produk_edit.php? id=<?php echo $info1['idproduk']; ?>"> &#128393 </a>
@@ -46,9 +46,10 @@
             </tr>
             <?php $no++; } ?>
 
-            <tr>
-                <td colspan="7"><center>
-                    <font style = "font-size:12px">~~~~~Senarai Tamat~~~~~<br />
+            <tr id="row1">
+                <td colspan="9"><center>
+                    <br>
+                    <font style = "font-size:12px">~~~~~ Senarai Tamat ~~~~~<br />
                         Jumlah Produk : <?php echo $no-1; ?>
                     </font>
                     <p><button onclick="printDiv('isi')"> CETAK </button></p>
@@ -80,7 +81,7 @@
                 <td><?php echo $info1['namaProduk']; ?></td>
                 <td><?php echo $info1['namaJenama']; ?></td>
                 <td>RM <?php echo $info1['harga']; ?></td>
-                <td width="200px"><img src="gambar/<?php echo $info1['gambar'] ?>" width="auto" height="120px"></td>
+                <td><img class="gambar" src="gambar/<?php echo $info1['gambar'] ?>"></td>
                 <td><?php echo $info1['markahpenilaian']; ?></td>
                 <td>
                     <p>
@@ -94,9 +95,10 @@
             </tr>
             <?php $no++; } ?>
 
-            <tr>
+            <tr id="row1">
                 <td colspan="7"><center>
-                    <font style = "font-size:12px">~~~~~Senarai Tamat~~~~~<br />
+                    <br>
+                    <font style = "font-size:12px">~~~~~ Senarai Tamat ~~~~~<br />
                         Jumlah Produk : <?php echo $no-1; ?>
                     </font>
                     <p><button onclick="printDiv('isi')"> CETAK </button></p>

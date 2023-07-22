@@ -42,6 +42,7 @@
             </p>
 
             <p>Gambar Produk <br>
+            <font color='crimson'>* Hanya .jpg/.jpeg/.png diterima</font><br>
             <input type="file" name="gambar" accept=".jpg,.jpeg,.png" required>
             </p>
 

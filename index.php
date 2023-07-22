@@ -6,7 +6,7 @@
 <div id='isi'>
     <body>
         <center>
-            <p> Sila log masuk untuk memilih barangan yang hendak dibeli </p>
+            <p>~ Sila log masuk untuk memilih barangan yang hendak dibeli ~</p>
         </center>
     </body>
     <?php include 'welcome.php'; ?>

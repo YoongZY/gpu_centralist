@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2023 at 05:45 PM
+-- Generation Time: Jul 22, 2023 at 05:28 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -61,7 +61,7 @@ CREATE TABLE `pengguna` (
 INSERT INTO `pengguna` (`idaccount`, `Password`, `Namapanggilan`, `Aras`) VALUES
 ('1', '2', 'Yoong', 'PENGGUNA'),
 ('admin', '12345678', 'ADMIN', ''),
-('hello', '12345678', 'hello', 'PENGGUNA');
+('test', 'qwertyui', 'Test', 'PENGGUNA');
 
 -- --------------------------------------------------------
 
@@ -87,8 +87,11 @@ CREATE TABLE `produk` (
 INSERT INTO `produk` (`idproduk`, `namaProduk`, `idjenama`, `harga`, `deskripsi`, `gambar`, `pautanpembelian`, `markahpenilaian`) VALUES
 (15, 'GeForce RTX 4090', 5, '8400', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2230 MHz <br> Memory Size: 24 GB <br> Memory Type: GDDR6X <br> DirectX: 12 <br> OpenGL: 4.6 <br> Release Date: 12/10/2022', '20230720_171048.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4090/                                    ', 39087),
 (16, 'GeForce RTX 4080', 5, '6300', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2205 MHz <br> Memory Size: 16 GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 20/09/2022', '20230720_171158.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4080/                        ', 35017),
-(17, 'Radeon PRO W7800', 4, 'NA', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855 MHz <br> Memory Size: 32 GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 13/04/2023', '20230720_171935.jpg', 'NA            ', 32146),
-(18, 'GeForce RTX 4070 Ti', 5, '3959', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2310MHz <br> Memory Size: 12GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/01/2023', '20230720_173011.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4070-4070ti/', 31668);
+(17, 'Radeon PRO W7800', 4, '-', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855 MHz <br> Memory Size: 32 GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 13/04/2023', '20230720_171935.jpg', 'NA                        ', 32146),
+(18, 'GeForce RTX 4070 Ti', 5, '3959', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2310MHz <br> Memory Size: 12GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/01/2023', '20230720_173011.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4070-4070ti/', 31668),
+(19, 'Radeon RX 7900 XTX', 4, '1000', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855MHz <br> Memory Size: 24GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/11/2022', '20230722_041002.jpg', 'https://www.amd.com/en/products/graphics/amd-radeon-rx-7900xtx', 31522),
+(20, 'Radeon PRO W7900', 4, '18239', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855MHz <br> Memory Size: 48GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 13/04/2023', '20230722_041833.jpg', 'https://www.amd.com/en/products/professional-graphics/amd-radeon-pro-w7900', 31126),
+(21, 'GeForce RTX 3090 Ti', 5, '9700', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1560MHz <br> Memory Size: 24GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 27/01/2022', '20230722_042426.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/30-series/rtx-3090-3090ti/', 29824);
 
 -- --------------------------------------------------------
 
@@ -98,9 +101,26 @@ INSERT INTO `produk` (`idproduk`, `namaProduk`, `idjenama`, `harga`, `deskripsi`
 
 CREATE TABLE `rekod_pilihan` (
   `idrekod` int(6) NOT NULL,
-  `idaccount` varchar(255) NOT NULL,
+  `idaccount` varchar(255) DEFAULT NULL,
   `idproduk` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rekod_pilihan`
+--
+
+INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
+(58, NULL, 15),
+(60, NULL, 15),
+(59, NULL, 16),
+(50, '1', 15),
+(51, '1', 15),
+(63, '1', 15),
+(52, '1', 16),
+(54, '1', 16),
+(53, '1', 17),
+(61, '1', 21),
+(62, '1', 21);
 
 --
 -- Indexes for dumped tables
@@ -147,13 +167,13 @@ ALTER TABLE `jenama`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `idproduk` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idproduk` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- Constraints for dumped tables
@@ -169,7 +189,7 @@ ALTER TABLE `produk`
 -- Constraints for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  ADD CONSTRAINT `idaccount` FOREIGN KEY (`idaccount`) REFERENCES `pengguna` (`idaccount`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `idaccount` FOREIGN KEY (`idaccount`) REFERENCES `pengguna` (`idaccount`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `idproduk` FOREIGN KEY (`idproduk`) REFERENCES `produk` (`idproduk`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 

@@ -8,10 +8,10 @@
 </title>
 
 <div class="header">
-    <font style="color:powderblue;"><center>
+    <font>
         <h1>&#10024  <?php echo $web; ?>  &#10024</h1>
-        <h3><?php echo $motto; ?></h3>
-    </center></font>
+        <h4><?php echo $motto; ?></h4>
+    </font>
     <?php include 'utility.php'; ?>
 </div>
 </html>

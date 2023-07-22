@@ -8,10 +8,11 @@ if ($_SESSION['level']=="PENGGUNA"){
         <li><a href="produk.php">📃Senarai Produk</a></li>
         <li><?php include 'jenama_menu.php'; ?></li>
         <li><?php include 'produk_cari.php'; ?></li><br>
+        <li><a href="setting.php">⚙️Setting Akaun</a></li>
         <li><a href="logout.php">🚪Log Keluar</a></li>
     </ul></h4>
 <?php }else{ ?>
-    <h3> Menu Admin </h3>   <!-- admin login -->
+    <h3> Menu [<?php echo $_SESSION['nama']; ?>] </h3>   <!-- admin login -->
     <h4><ul>
         <li><a href="dashboard.php">🏠Home</a></li><br>
         <li><a href="produk.php">📃Senarai Produk</a></li>
@@ -19,6 +20,7 @@ if ($_SESSION['level']=="PENGGUNA"){
         <li><a href="jenama.php">📃Senarai Jenama</a></li>
         <li><a href="jenama_tambah.php">➕Tambah Jenama</a></li><br>
         <li><a href="pilihan.php">📋Pilihan Pengguna</a></li><br>
+        <li><a href="setting.php">⚙️Setting Akaun</a></li>
         <li><a href="logout.php">🚪Log Keluar</a></li>
     </ul></h4>
 <?php } ?>

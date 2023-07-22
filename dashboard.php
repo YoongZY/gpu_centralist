@@ -1,4 +1,3 @@
-<!-- session_start(); -->
 <html>
 <?php include 'header.php'; ?>  <!-- call header -->
 

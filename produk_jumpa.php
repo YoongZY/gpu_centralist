@@ -1,6 +1,6 @@
 <?php include 'header.php'; 
     $jumpa = $_POST['carian'];
-    if($jumpa==NULL) {
+    if($jumpa == NULL) {
         echo "<script> alert('Sila taipkan nama produk'); window.location='dashboard.php'</script>";
     }
 ?>
@@ -16,13 +16,13 @@
         <?php
             $query_jenama = "SELECT * FROM produk AS t1 INNER JOIN jenama AS t2 ON t1.idjenama=t2.idjenama WHERE t1.namaProduk LIKE '%$jumpa%' ORDER BY t1.namaProduk ASC";
             $papar_query_jenama = mysqli_query($connect,$query_jenama);
+            echo '<div class="card-container">'; // Container for the card divs
+
             if (mysqli_num_rows($papar_query_jenama)>0) {
                 foreach($papar_query_jenama as $senarai_jenama) {
         ?>
                     <div class="card">
-                        <div class="gambar">
-                            <img src="gambar/<?php echo $senarai_jenama['gambar']; ?>" width="auto" height="120px">
-                        </div>
+                        <img class="gambar" src="gambar/<?php echo $senarai_jenama['gambar']; ?>">
                         <h3><?php echo $senarai_jenama['namaProduk']; ?></h3>
                         <p class="price">Jenama : <?php echo $senarai_jenama['namaJenama']; ?></p>
                         <p class="price">G3D : <?php echo $senarai_jenama['markahpenilaian']; ?></p>
@@ -40,8 +40,9 @@
             <?php
                 }
             }else{
-                echo "Maaf, tiada yang sepadan";
+                echo "Maaf, tiada produk yang bersesuaian dengan carian nama anda";
             }
+            echo '</div>';  // Close the card-container div
             ?>
     </body>
 </div>

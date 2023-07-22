@@ -4,8 +4,6 @@
     --table-color: #9accff;
     --menu-color: #f2f2f2;
 }
-
-/* Dark mode color variables */
 :root[data-theme="dark"] {
     --text-color: white;
     --bg-color: #696969;
@@ -13,98 +11,138 @@
     --menu-color: #444;
 }
 
-/*produk card display*/
-.card {
-    padding: 10px;
-    max-width: 150px;
-    margin: 10px;
-    text-align: center;
-    box-sizing: border-box;
-}
+/*image settings*/
 
-/*produk card display wrapping container*/
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 15px;
-    justify-items: center;
-    box-sizing: border-box;
-}
+    /*produk card display*/
+    .card{
+        padding: 10px;
+        max-width: 150px;
+        margin: 10px;
+        text-align: center;
+        box-sizing: border-box;
+    }
 
-/*produk photo frame*/
-.gambar {
-    width: 150px;
-    border: thin solid black;
-}
+    /*produk card display wrapping container*/
+    .card-container{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 15px;
+        justify-items: center;
+        box-sizing: border-box;
+    }
 
-/*header display*/
-.header{
-    width: 100%;
-    height: 140px;
-    position: sticky;
-    top: 0px;
-    background-image: url('gambar/system/banner1.png');
-    background-size: cover;
-    text-align: left;
-    padding-left: 0%;
-    z-index: 100;
-    border-bottom: black solid;
-}
+    /*produk photo*/
+    .gambar{
+        width: 150px;
+        border-color: thin solid rgb(12, 0, 39);
+    }
+    .gambar2{
+        width: 30%;
+        border-color: thin solid rgb(12, 0, 39);
+    }
 
-.table{
-    width: 100%; 
-}
+/*header settings*/
 
-/*div menu (left)*/
-#menu {
-    position: sticky;
-    top: 0px;
-    width: fit-content;
-    min-width: 20%;
-    max-width: 20%;
-    float: left;
-    left: 1%;
-    background-color: #f2f2f2;
-    box-sizing: border-box;
-    padding: 10px;
-    overflow: auto;
-    z-index: 10;
-}
+    /*header display*/
+    .header{
+        width: 100%;
+        height: 140px;
+        position: sticky;
+        top: 0px;
+        background-image: url('gambar/system/banner1.png');
+        background-size: cover;
+        text-align: center;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: bolder;
+        color: rgb(217, 239, 241);
+        text-shadow: 2px 2px 2px black;
+        padding-left: 0%;
+        z-index: 100;
+        border-bottom: black solid;
+    }
 
-/*div isi (right)*/
-#isi{
-    margin-left: calc(10% + 2%);
-    padding: 20px;
-    box-sizing: border-box;
-    overflow: auto;
-}
+/*content settings*/
 
-/*button*/
-button{
-    background-color: rgb(96, 96, 255);
-    color: white;
-}
+    /*div menu (left)*/
+    #menu{
+        position: sticky;
+        top: 0px;
+        min-width: 20%;
+        max-width: 20%;
+        float: left;
+        left: 1%;
+        background-color: #f2f2f2;
+        box-sizing: border-box;
+        padding: 10px;
+        overflow: auto;
+        z-index: 10;
+    }
 
-/*body background*/
-body{
-    background-image: url("gambar/system/back.png");
-    height: 100%;
-    background-size: cover;
-}
+    /*div isi (right)*/
+    #isi{
+        margin-left: calc(10% + 2%);
+        padding: 20px;
+        box-sizing: border-box;
+        overflow: auto;
+    }  
 
-#row1{
-    font-weight: bold;
-}
+    /*body background*/
+    body{
+        background-image: url("gambar/system/back.png");
+        height: 100%;
+        background-size: cover;
+    }
 
-/*table display*/
-tr{
-    border: 1px;
-    background-color: #9accff;
-    text-align: center;
-    padding: 8px;
-}
+    /*double col page*/
+    .doublecol{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(300px, 1fr));
+        grid-gap: 10px;
+        width: 50%;
+        padding: 5px;
+    }
 
-/*table row alternating color display*/
-tr:nth-child(even) {
-    background-color: rgb(211, 227, 255);
-}
+/*table settings*/
+
+    /*standard table width*/
+    .table{
+        width: 100%; 
+    }
+
+    /*table 1st row*/
+    #row1{
+        font-weight: bold;
+        background-color: #b7a7ff;
+        height: 30px;
+    }
+
+    /*table shrink wide td*/
+    #shrinktd{
+        max-width: 100px;
+        text-indent: 5px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    /*table display*/
+    tr{
+        border: 1px;
+        background-color: #9accff;
+        text-align: center;
+        padding: 8px;
+    }
+
+    /*table row alternating color display*/
+    tr:nth-child(even) {
+        background-color: rgb(211, 227, 255);
+    }
+
+/*misc settings*/
+
+    /*button*/
+    button{
+        background-color: rgb(96, 96, 255);
+        color: white;
+        border-radius: 25%;
+    }

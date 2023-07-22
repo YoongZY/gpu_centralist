@@ -42,8 +42,9 @@
             </p>
 
             <p>Gambar Produk <br>
-            <img src="gambar/<?php echo $qProduk['gambar']; ?>" width="30%" height="auto"><br>
+            <img class="gambar2" src="gambar/<?php echo $qProduk['gambar']; ?>"><br>
             <?php $default = $qProduk['gambar'];?>
+            <font color='crimson'>* Hanya .jpg/.jpeg/.png diterima</font><br>
             Tukar Gambar: <input type="file" name="gambar" accept=".jpg,.jpeg,.png" value="$default";>
             </p>
 
@@ -53,7 +54,7 @@
             </p>
 
             <p>Markah G3D Produk <br>
-            <input type="text" name="markah" value=<?php echo $qProduk['markahpenilaian']; ?> size="45" required>
+            <input type="text" name="markah" value=<?php echo $qProduk['markahpenilaian']; ?> size="50" required>
             </p>
 
             <input type="text" name="id" value="<?php echo $qProduk['idproduk']; ?>" hidden>

@@ -18,7 +18,7 @@
             <font color=green> File mesti dalam bentuk .CSV </font>
         </form>
         Contoh fail: <br>
-        JENAMA1, JENAMA2, JENAMA3, JENAMA4
+        JENAMA1,JENAMA2,JENAMA3,JENAMA4
         <br>
     </div>
 </body>

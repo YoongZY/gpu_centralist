@@ -41,9 +41,7 @@ $selectedBrandsString = implode(',', $selectedBrands);
                 $isChecked = in_array($senarai_jenama['idjenama'], $selectedBrands) ? 'checked' : '';
                 ?>
                 <div class="card">
-                    <div class="gambar">
-                        <img src="gambar/<?php echo $senarai_jenama['gambar']; ?>" width="auto" height="120px">
-                    </div>
+                    <img class="gambar" src="gambar/<?php echo $senarai_jenama['gambar']; ?>">
                     <h3><?php echo $senarai_jenama['namaProduk']; ?></h3>
                     <p class="price">Jenama : <?php echo $senarai_jenama['namaJenama']; ?></p>
                     <p class="price">G3D : <?php echo $senarai_jenama['markahpenilaian'] ?></p>
@@ -62,7 +60,7 @@ $selectedBrandsString = implode(',', $selectedBrands);
             
             echo '</div>';  // Close the card-container div
         } else {
-            echo "Produk ini tidak dapat ditemui dalam jenama";
+            echo "Tiada produk dalam jenama ini dapat ditemui";
         }
         ?>
     </body>

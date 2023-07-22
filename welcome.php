@@ -11,9 +11,7 @@
             <!-- papar produk -->
             
                 <div class="card">
-                    <div class="gambar">
-                        <img src="gambar/<?php echo $senarai_produk['gambar']; ?>" width="auto" height="120px">
-                    </div>
+                    <img class="gambar" src="gambar/<?php echo $senarai_produk['gambar']; ?>">
                     <h3><?php echo $senarai_produk['namaProduk']; ?></h3>
                     <p><?php echo $senarai_produk['namaJenama']; ?></p>
                 </div>
