@@ -1,6 +1,6 @@
-<?php
-include 'header.php';
+<?php include 'header.php'; // Include the "header.php" file to add common header content
 
+// Check if any brands are selected from the previous page (harga_menu.php)
 if (isset($_POST['brands'])) {
     $selectedBrandsString = $_POST['brands'];
     $selectedBrands = explode(',', $selectedBrandsString);
@@ -9,14 +9,15 @@ if (isset($_POST['brands'])) {
     $selectedBrands = [];
 }
 
-if (isset($_POST['pilih'])) {
+if (isset($_POST['pilih'])) { // Check if the "SEARCH" button is clicked
     if (empty($_POST['harga1']) || empty($_POST['harga2'])) {
+        // If the price range is not provided, show an alert and redirect back to dashboard.php
         echo "<script>alert('Sila masukkan julat harga'); window.location='dashboard.php'</script>";
     } else {
         $pilih1 = $_POST['harga1'];
         $pilih2 = $_POST['harga2'];
 
-        // Build the SQL query
+        // Build the SQL query to retrieve products that match the selected brands and fall within the specified price range
         $query_produk = "SELECT * FROM jenama AS t1 INNER JOIN produk AS t2 ON t1.idjenama = t2.idjenama";
         
         if (!empty($selectedBrands)) {
@@ -26,10 +27,12 @@ if (isset($_POST['pilih'])) {
         
         $query_produk .= " AND t2.harga BETWEEN $pilih1 AND $pilih2 ORDER BY t2.harga ASC";
 
+        // Execute the SQL query to get the product results
         $papar_query = mysqli_query($connect, $query_produk);
-        
-        if (mysqli_num_rows($papar_query) > 0) {
+
+        if (mysqli_num_rows($papar_query) > 0) { // Check if there are products that match the criteria
             ?>
+            <!-- Display the products in a card layout -->
             <html>
             <div id="menu">
                 <?php include 'menu2.php'; ?>
@@ -40,21 +43,22 @@ if (isset($_POST['pilih'])) {
                 </head>
                 <body>
                 <?php
-                include 'harga_menu.php';
+                include 'harga_menu.php'; // Display the "Pilihan Harga" form again
 
                 echo "<hr>";
                 echo '<div class="card-container">'; // Container for the card divs
 
                 while ($senarai_produk = mysqli_fetch_assoc($papar_query)) {
-                    $isChecked = in_array($senarai_produk['idjenama'], $selectedBrands) ? 'checked' : ''; // Check if the current brand is selected
+                    // Check if the current brand is selected and set the 'checked' attribute accordingly
+                    $isChecked = in_array($senarai_produk['idjenama'], $selectedBrands) ? 'checked' : '';
                     ?>
-                    <!-- papar produk -->
+                    <!-- Display product information in a card -->
                     <div class="card">
                         <img class="gambar" src="gambar/<?php echo $senarai_produk['gambar']; ?>">
                         <h3><?php echo $senarai_produk['namaProduk']; ?></h3>
                         <p class="price">Jenama : <?php echo $senarai_produk['namaJenama']; ?></p>
                         <p class="price">RM <?php echo $senarai_produk['harga']; ?></p>
-                        <!-- simpan ke table pilihan -->
+                        <!-- Add a form to save the product selection in the "pilihan_simpan.php" page -->
                         <p>
                             <form method="POST" action="pilihan_simpan.php">
                                 <input type="text" name="idproduk" value="<?php echo $senarai_produk['idproduk']; ?>" hidden>
@@ -66,13 +70,14 @@ if (isset($_POST['pilih'])) {
                     <?php
                 }
 
-                echo '</div>';  // Close the card-container div
+                echo '</div>'; // Close the card-container div
                 ?>
                 </body>
             </div>
             </html>
             <?php
         } else { ?>
+            <!-- Display a message if there are no products that match the criteria -->
             <html>
             <div id="menu">
                 <?php include 'menu2.php'; ?>

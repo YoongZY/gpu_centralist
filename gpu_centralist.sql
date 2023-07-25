@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2023 at 05:28 AM
+-- Generation Time: Jul 25, 2023 at 03:12 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -37,9 +37,9 @@ CREATE TABLE `jenama` (
 --
 
 INSERT INTO `jenama` (`idjenama`, `namaJenama`) VALUES
-(2, 'Intel'),
 (4, 'AMD'),
-(5, 'NVIDIA');
+(5, 'NVIDIA'),
+(6, 'Intel');
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`idproduk`, `namaProduk`, `idjenama`, `harga`, `deskripsi`, `gambar`, `pautanpembelian`, `markahpenilaian`) VALUES
-(15, 'GeForce RTX 4090', 5, '8400', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2230 MHz <br> Memory Size: 24 GB <br> Memory Type: GDDR6X <br> DirectX: 12 <br> OpenGL: 4.6 <br> Release Date: 12/10/2022', '20230720_171048.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4090/                                    ', 39087),
+(15, 'GeForce RTX 4090', 5, '8400', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2230 MHz <br> Memory Size: 24 GB <br> Memory Type: GDDR6X <br> DirectX: 12 <br> OpenGL: 4.6 <br> Release Date: 12/10/2022', '20230720_171048.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4090/                                                            ', 39087),
 (16, 'GeForce RTX 4080', 5, '6300', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2205 MHz <br> Memory Size: 16 GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 20/09/2022', '20230720_171158.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4080/                        ', 35017),
 (17, 'Radeon PRO W7800', 4, '-', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855 MHz <br> Memory Size: 32 GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 13/04/2023', '20230720_171935.jpg', 'NA                        ', 32146),
 (18, 'GeForce RTX 4070 Ti', 5, '3959', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2310MHz <br> Memory Size: 12GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/01/2023', '20230720_173011.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4070-4070ti/', 31668),
@@ -116,11 +116,15 @@ INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
 (50, '1', 15),
 (51, '1', 15),
 (63, '1', 15),
+(65, '1', 15),
+(66, '1', 15),
 (52, '1', 16),
 (54, '1', 16),
+(64, '1', 16),
 (53, '1', 17),
 (61, '1', 21),
-(62, '1', 21);
+(62, '1', 21),
+(67, '1', 21);
 
 --
 -- Indexes for dumped tables
@@ -161,7 +165,7 @@ ALTER TABLE `rekod_pilihan`
 -- AUTO_INCREMENT for table `jenama`
 --
 ALTER TABLE `jenama`
-  MODIFY `idjenama` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idjenama` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -173,7 +177,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- Constraints for dumped tables

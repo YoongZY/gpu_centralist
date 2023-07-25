@@ -1,10 +1,12 @@
-<?php require 'connect.php';
+<?php require 'connect.php'; // Include the connection to the database
 
 if (isset($_POST['submit'])) {
+    // Retrieve data from the form submission
     $nama = $_POST['nama'];
     $jenama = $_POST['jenama'];
     $harga = $_POST['harga'];
 
+    // Combine the detailed specifications into a formatted description
     $det1 = $_POST['det1'];
     $det2 = $_POST['det2'];
     $det3 = $_POST['det3'];
@@ -23,22 +25,26 @@ if (isset($_POST['submit'])) {
     $pautan = $_POST['pautan'];
     $markah = $_POST['markah'];
 
+    // Upload the image file and generate a new filename based on the current date and time
     $ext = strtolower(pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION));
     $newnamepic = date('Ymd_His') . "." . $ext;
     $uploadPath = "gambar/" . $newnamepic;
     $isUploaded = move_uploaded_file($_FILES['gambar']['tmp_name'], $uploadPath);
+
+    // If the image upload fails, display an alert and redirect back to the previous page
     if (!$isUploaded) {
         echo "<script>alert('Gambar tidak dapat dimuat naik'); window.location='produk_edit.php?id=$id'</script>";
         exit();
     }
 
-    // record input into database
+    // Insert the new product record into the 'produk' table
     $baharu = "INSERT INTO produk VALUES (NULL,'$nama','$jenama','$harga','$deskripsi','$newnamepic','$pautan','$markah')";
-
     $barangan = mysqli_query($connect, $baharu);
+
+    // Check if the product insertion is successful and display appropriate alert messages
     if ($barangan){
         echo "<script> alert('Tambahan Produk BERJAYA');window.location='produk.php'</script>";
-    }else{
+    } else {
         echo "<script> alert('Tambahan Produk GAGAL');window.location='produk.php'</script>";
     }
 }

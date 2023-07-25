@@ -22,24 +22,32 @@ $selectedBrandsString = implode(',', $selectedBrands);
     </head>
     <body>
         <?php
+        // Build the SQL query to fetch products from the database based on selected brands
         $query_jenama = "SELECT * FROM jenama AS t1 INNER JOIN produk AS t2 ON t1.idjenama=t2.idjenama";
         
+        // Add a WHERE clause to the SQL query if any brands are selected
         if (!empty($selectedBrands)) {
             $query_jenama .= " WHERE t1.idjenama IN ($selectedBrandsString)";
         }
         
+        // Add an ORDER BY clause to the SQL query to sort products by markahpenilaian in descending order
         $query_jenama .= " ORDER BY t2.markahpenilaian DESC";
 
+        // Execute the SQL query
         $papar_query_jenama = mysqli_query($connect, $query_jenama);
 
         if (mysqli_num_rows($papar_query_jenama) > 0) {
+            // Display the harga_menu.php form to allow users to filter products by price range and brands
             include 'harga_menu.php';
             echo "<hr>";
             echo '<div class="card-container">'; // Container for the card divs
 
+            // Loop through each product and display its details in a card
             while ($senarai_jenama = mysqli_fetch_assoc($papar_query_jenama)) {
+                // Check if the current product's jenama is in the selected brands array
                 $isChecked = in_array($senarai_jenama['idjenama'], $selectedBrands) ? 'checked' : '';
                 ?>
+                <!-- Display the product card -->
                 <div class="card">
                     <img class="gambar" src="gambar/<?php echo $senarai_jenama['gambar']; ?>">
                     <h3><?php echo $senarai_jenama['namaProduk']; ?></h3>

@@ -1,0 +1,1650 @@
+connect.php:
+<?php
+// Database configuration
+$host = "localhost";            // Database host
+$user = "root";                 // Database username
+$password = "";                 // Database password
+$database = "gpu_centralist";   // Name of the database to be used
+
+// Establishing a database connection
+$connect = mysqli_connect($host, $user, $password, $database);
+if (mysqli_connect_errno()) {
+    // Check if the connection was successful, if not, display an error message and exit the script
+    echo "Proses sambung ke pangkalan data GAGAL";
+    exit();
+} else {
+    // The connection was successful, and there's nothing to do here.
+}
+
+// System information setup
+$namasys = "GPU Centralist";    // Name of the system
+$web = "GPU Centralist";        // Website or application name
+$motto = "Web maklumat GPU";    // Motto or description of the website
+?>
+
+
+dashboard.php:
+<html>
+    <?php include 'header.php'; ?>  <!-- Include the header file, which contains the common header elements -->
+
+    <div id="menu"> <!-- Call menu -->
+        <?php include 'menu2.php'; ?> <!-- Include the menu2.php file to load menu -->
+    </div>
+
+    <div id="isi">
+        <head>  <!-- Display a welcome message with the user's name -->
+            <h2 style="text-align: center"> Selamat Datang <?php echo $_SESSION['nama']; ?> </h2>
+        </head>
+
+        <?php include 'welcome.php'; ?> <!-- Include the welcome.php file to display additional content -->
+    </div>
+</html>
+
+
+harga_menu.php:
+<center> <!-- Center align the content within the div -->
+    <div>
+        <form action="jenama_harga.php" method="POST"> <!-- The form action points to "jenama_harga.php" for processing the search -->
+            <h4>Pilihan Harga</h4> <!-- Display the heading "Pilihan Harga" -->
+
+            <!-- Input fields for entering price range -->
+            <div>
+                Bermula RM
+                <input type="text" name="harga1" size="5" placeholder="1000.00" onkeypress='return event.charCode>=48 && event.charCode<=57' autofocus>
+                hingga RM
+                <input type="text" name="harga2" size="5" placeholder="2000.00" onkeypress='return event.charCode>=48 && event.charCode<=57' size="5">
+            </div>
+
+            <h5><button name="pilih" type="submit"> SEARCH </button></h5> <!-- Submit button to trigger the search -->
+            
+            <!-- Hidden input field to store selected brands -->
+            <input type="hidden" name="brands" value="<?php echo $selectedBrandsString; ?>">
+        </form>
+    </div>
+</center>
+
+
+header.php:
+<?php include 'connect.php'; ?>
+<html>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<title>
+    <?php echo $namasys; ?>
+</title>
+
+<div class="header">
+    <font>
+        <h1>&#10024  <?php echo $web; ?>  &#10024</h1>
+        <h4><?php echo $motto; ?></h4>
+    </font>
+    <?php include 'utility.php'; ?>
+</div>
+</html>
+
+
+import_simpan.php:
+<?php require 'connect.php'; // Require connect.php file to establish a connection to the database
+
+if (isset($_FILES['file'])) { // Check if a file has been uploaded via the form
+    $filename = $_FILES["file"]["tmp_name"]; // Get the temporary name of the uploaded file
+    if ($_FILES["file"]["size"] > 0) { // Check if the uploaded file is not empty
+        $file = fopen($filename, "r"); // Open the uploaded file in read mode
+        $successes = 0; // Counter for successful insertions
+
+        while (($getdata = fgetcsv($file, 10000, ",")) !== FALSE) { // Loop through each row in the CSV file
+            // Loop through each value in the CSV row
+            foreach ($getdata as $value) {
+                // Get the value from the CSV row and sanitize it to prevent SQL injection
+                $namaJenama = mysqli_real_escape_string($connect, $value);
+                // Prepare the SQL query to insert the sanitized value into "jenama" table
+                $import = "INSERT INTO jenama (idjenama, namaJenama) VALUES (NULL, '$namaJenama')";
+                // Execute the query to insert the data into the database
+                $tambah = mysqli_query($connect, $import);
+                // Check if insertion was successful
+                if ($tambah) {
+                    $successes++;
+                }
+            }
+        }
+
+        fclose($file); // Close the CSV file after processing
+
+        if ($successes > 0) {
+            // If at least one row was successfully inserted, display a success message and redirect to "jenama.php"
+            echo "<script>alert('Pindah naik fail CSV BERJAYA. Jumlah baris berjaya dimasukkan: $successes'); window.location='jenama.php'</script>";
+        } else {
+            // If no rows were inserted, display an error message and redirect back to "jenama.php"
+            echo "<script>alert('Pindah naik fail CSV GAGAL. Tiada baris berjaya dimasukkan.'); window.location='jenama.php'</script>";
+        }
+    }
+} else {
+    // If no file was selected, display an error message and redirect back to "import.php"
+    echo "<script>alert('Sila memilih fail CSV untuk diimport'); window.location='import.php'</script>";
+}
+?>
+
+
+import.php:
+<?php include 'header.php'; // Include the "header.php" file, which contains the common header elements ?>
+<html>
+<body>
+    <div id="menu"> <!-- Display the menu section -->
+        <?php include 'menu2.php'; // Include the "menu2.php" file, which contains the menu elements ?>
+    </div>
+    <div id="isi"> <!-- Display the main content section -->
+        <center> <!-- Center-align the content -->
+            <h2>Import Jenama dari Fail CSV</h2> <!-- Heading for the import section -->
+        </center>
+        <label> Pilih lokasi fail CSV/Excel</label> <!-- Label for the file input field -->
+        <!-- Upload fail CSV using a form with "POST" method to "import_simpan.php" -->
+        <form action="import_simpan.php" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".CSV" required> <!-- File input field to select the CSV file -->
+            <br><br>
+            <button type="submit" id="submit" name="import"> UPLOAD </button><br> <!-- Upload button to submit the form -->
+            <font color=green> File mesti dalam bentuk .CSV </font> <!-- Instruction for the file format -->
+        </form>
+        Contoh fail: <br> <!-- Example CSV file format -->
+        JENAMA1,JENAMA2,JENAMA3,JENAMA4
+        <br>
+    </div>
+</body>
+</html>
+
+
+index.php:
+<?php include 'header.php'; // Include the "header.php" file, which contains the common header elements ?>
+<html>
+<div id='menu'>
+    <?php include 'menu1.php'; // Include the "menu1.php" file, which contains the menu elements for users ?>
+</div>
+<div id='isi'>
+    <body>
+        <center> <!-- Center-align the content -->
+            <font color='green'> ~ Sila log masuk untuk memilih barangan yang hendak dibeli ~ </font> <!-- A message prompting users to log in to make purchases -->
+        </center>
+    </body>
+    <?php include 'welcome.php'; // Include the welcome.php file to display additional content ?>
+</div>
+</html>
+
+
+jenama_edit.php:
+<?php 
+    include 'header.php'; // Include the "header.php" file, which contains the common header elements
+    $idjenama = $_GET['id']; // Get the "id" parameter from the URL to identify the specific jenama to edit
+    // Query the database to get the jenama data based on the provided "id"
+    $datajenama = mysqli_query($connect, "SELECT * FROM jenama WHERE idjenama='$idjenama'");
+    $qJenama = mysqli_fetch_array($datajenama); // Fetch the jenama data and store it in the $qJenama variable
+?>
+<html>
+<div id="menu"> <!-- Display the menu section -->
+    <?php include 'menu2.php' ; // Include the "menu2.php" file, which contains the menu elements ?>
+</div>
+
+<div id="isi">  <!-- Display the content section -->
+    <head>
+        <h2 style="text-align:center"> Edit Jenama </h2> <!-- Display the heading for the edit form -->
+    </head>
+    <body>
+        <form method="POST" action="jenama_kemaskini.php"> <!-- A form to update the Jenama data and submit it to "jenama_kemaskini.php" -->
+            <p>JENAMA<br>
+            <input type="text" name="nama" value="<?php echo $qJenama['namaJenama']; ?>" size="50" required autofocus></p> <!-- Display an input field with the current Jenama name to allow editing -->
+            <input type="text" name="id" value="<?php echo $qJenama['idjenama']; ?>" hidden> <!-- A hidden input field to store the Jenama ID for identification during the update process -->
+            <br>
+            <button name="submit" type="submit"> SIMPAN </button> <!-- Submit button to update the Jenama data -->
+            <br>
+            <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font> <!-- A note to ensure correct information input -->
+        </form>
+    </body>
+</div>
+</html>
+
+
+jenama_hapus.php:
+<?php include 'connect.php'; // Include the "connect.php" file to establish a database connection
+// Get the "id" parameter from the URL to identify the specific Jenama to delete
+$idDel = $_GET['id'];
+// Check if there are any produk associated with the Jenama that is being deleted
+$result = mysqli_query($connect, "SELECT COUNT(idjenama) FROM produk WHERE idjenama='$idDel'");
+
+if ($result) { // Check if the query was successful
+    $row = mysqli_fetch_array($result);
+    $count = $row[0]; // Retrieve the count of products associated with the Jenama from the query result
+
+    if ($count == 0) { // If there are no products associated with the Jenama
+        // Delete the Jenama from the database
+        mysqli_query($connect, "DELETE FROM jenama WHERE idjenama='$idDel'");
+        echo "<script> alert ('Penghapusan Jenama BERJAYA'); window.location='jenama.php'</script>";
+    } else {
+        // If there are products associated with the Jenama, display an alert and prevent the deletion
+        echo "<script> alert ('Penghapusan Jenama GAGAL. Sila pastikan semua produk jenama ini sudah dihapus'); window.location='jenama.php'</script>";
+    }
+} else {
+    // If the query failed or no "id" parameter was provided in the URL, redirect back to "jenama.php"
+    echo "<script> window.location='jenama.php'</script>";
+}
+?>
+
+
+jenama_harga.php:
+<?php include 'header.php'; // Include the "header.php" file to add common header content
+
+// Check if any brands are selected from the previous page (harga_menu.php)
+if (isset($_POST['brands'])) {
+    $selectedBrandsString = $_POST['brands'];
+    $selectedBrands = explode(',', $selectedBrandsString);
+} else {
+    // Handle the case when no brands are selected
+    $selectedBrands = [];
+}
+
+if (isset($_POST['pilih'])) { // Check if the "SEARCH" button is clicked
+    if (empty($_POST['harga1']) || empty($_POST['harga2'])) {
+        // If the price range is not provided, show an alert and redirect back to dashboard.php
+        echo "<script>alert('Sila masukkan julat harga'); window.location='dashboard.php'</script>";
+    } else {
+        $pilih1 = $_POST['harga1'];
+        $pilih2 = $_POST['harga2'];
+
+        // Build the SQL query to retrieve products that match the selected brands and fall within the specified price range
+        $query_produk = "SELECT * FROM jenama AS t1 INNER JOIN produk AS t2 ON t1.idjenama = t2.idjenama";
+        
+        if (!empty($selectedBrands)) {
+            $selectedBrandsString = implode(',', $selectedBrands);
+            $query_produk .= " WHERE t1.idjenama IN ($selectedBrandsString)";
+        }
+        
+        $query_produk .= " AND t2.harga BETWEEN $pilih1 AND $pilih2 ORDER BY t2.harga ASC";
+
+        // Execute the SQL query to get the product results
+        $papar_query = mysqli_query($connect, $query_produk);
+
+        if (mysqli_num_rows($papar_query) > 0) { // Check if there are products that match the criteria
+            ?>
+            <!-- Display the products in a card layout -->
+            <html>
+            <div id="menu">
+                <?php include 'menu2.php'; ?>
+            </div>
+            <div id="isi">
+                <head>
+                    <h2 style="text-align:center"> Senarai Produk Mengikut Jenama & Pilihan Harga </h2>
+                </head>
+                <body>
+                <?php
+                include 'harga_menu.php'; // Display the "Pilihan Harga" form again
+
+                echo "<hr>";
+                echo '<div class="card-container">'; // Container for the card divs
+
+                while ($senarai_produk = mysqli_fetch_assoc($papar_query)) {
+                    // Check if the current brand is selected and set the 'checked' attribute accordingly
+                    $isChecked = in_array($senarai_produk['idjenama'], $selectedBrands) ? 'checked' : '';
+                    ?>
+                    <!-- Display product information in a card -->
+                    <div class="card">
+                        <img class="gambar" src="gambar/<?php echo $senarai_produk['gambar']; ?>">
+                        <h3><?php echo $senarai_produk['namaProduk']; ?></h3>
+                        <p class="price">Jenama : <?php echo $senarai_produk['namaJenama']; ?></p>
+                        <p class="price">RM <?php echo $senarai_produk['harga']; ?></p>
+                        <!-- Add a form to save the product selection in the "pilihan_simpan.php" page -->
+                        <p>
+                            <form method="POST" action="pilihan_simpan.php">
+                                <input type="text" name="idproduk" value="<?php echo $senarai_produk['idproduk']; ?>" hidden>
+                                <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                                <button name="submit"> PILIH </button></a>
+                            </form>
+                        </p>
+                    </div>
+                    <?php
+                }
+
+                echo '</div>'; // Close the card-container div
+                ?>
+                </body>
+            </div>
+            </html>
+            <?php
+        } else { ?>
+            <!-- Display a message if there are no products that match the criteria -->
+            <html>
+            <div id="menu">
+                <?php include 'menu2.php'; ?>
+            </div>
+            <div id="isi">
+                <head>
+                    <h2 style="text-align:center"> Senarai Produk Mengikut Pilihan Harga & Jenama </h2>
+                </head>
+                <?php echo "Tiada produk jenama ini terdapat dalam julat harga yang dimasukki";
+        }
+    }
+}
+?>
+
+
+jenama_kemaskini.php:
+<?php require 'connect.php'; //Include the "connect.php" file to establish a database connection
+
+// receive value from POST when the form is submitted
+if(null !== $_POST['submit']){ 
+    $id = $_POST['id']; // Get the ID of the jenama to be updated from the form
+    $nama = $_POST['nama']; // Get the updated name of the jenama from the form
+
+    // Update the jenama record in the database with the new name
+    $result2 = mysqli_query($connect, "UPDATE jenama SET namaJenama='$nama' WHERE idjenama='$id'");
+
+    // Show an alert to indicate that the jenama update was successful and redirect back to the 'jenama.php' page
+    echo "<script> alert ('Kemaskini Jenama BERJAYA'); window.location='jenama.php'</script>";
+    
+}else{
+    // If the form with the name "submit" was not submitted, redirect back to the 'produk.php' page
+    echo "<script> window.location='produk.php'</script>";
+}
+?>
+
+
+jenama_menu.php:
+<h4>🏷️Jenama</h4>
+<form action="jenama_pilihan.php" method="GET">
+    <?php   // Select every jenama in the jenama table
+    $query_jenama="SELECT * FROM jenama";
+    $papar_query_jenama=mysqli_query($connect, $query_jenama);
+
+    // Check if there are any jenama records in the database
+    if(mysqli_num_rows($papar_query_jenama)>0){
+
+        // Loop through each jenama record and display a checkbox for each one
+        while ($senarai_brand = mysqli_fetch_assoc($papar_query_jenama)) {
+            $brandID = $senarai_brand['idjenama'];
+            $isChecked = in_array($brandID, $_GET['brand'] ?? []);
+            ?>
+            <input type="checkbox" name="brand[]" onclick="onlyOne2(this)" value="<?php echo $brandID; ?>" <?php if ($isChecked) echo "checked"; ?>>
+            <?php echo $senarai_brand['namaJenama']; ?><br/>
+            <?php
+        } ?>
+        
+        <br>
+        <button type="submit"> PILIH </button>
+    <?php 
+    } ?>
+</form>
+
+
+jenama_pilihan.php:
+<?php
+if (empty($_GET['brand'])) {
+    $selectedBrands = []; // Default to an empty array if no values are selected
+} else {
+    $selectedBrands = $_GET['brand'];
+    $selectedBrands = array_map('intval', $selectedBrands); // Convert the values to integers
+}
+
+include 'header.php';
+
+// Set the selectedBrands variable as the selected idjenama values
+$selectedBrandsString = implode(',', $selectedBrands);
+?>
+
+<html>
+<div id="menu">
+    <?php include 'menu2.php'; ?>
+</div>
+<div id="isi">
+    <head>
+        <h2 style="text-align:center"> Senarai Produk Ikut Jenama </h2>
+    </head>
+    <body>
+        <?php
+        // Build the SQL query to fetch products from the database based on selected brands
+        $query_jenama = "SELECT * FROM jenama AS t1 INNER JOIN produk AS t2 ON t1.idjenama=t2.idjenama";
+        
+        // Add a WHERE clause to the SQL query if any brands are selected
+        if (!empty($selectedBrands)) {
+            $query_jenama .= " WHERE t1.idjenama IN ($selectedBrandsString)";
+        }
+        
+        // Add an ORDER BY clause to the SQL query to sort products by markahpenilaian in descending order
+        $query_jenama .= " ORDER BY t2.markahpenilaian DESC";
+
+        // Execute the SQL query
+        $papar_query_jenama = mysqli_query($connect, $query_jenama);
+
+        if (mysqli_num_rows($papar_query_jenama) > 0) {
+            // Display the harga_menu.php form to allow users to filter products by price range and brands
+            include 'harga_menu.php';
+            echo "<hr>";
+            echo '<div class="card-container">'; // Container for the card divs
+
+            // Loop through each product and display its details in a card
+            while ($senarai_jenama = mysqli_fetch_assoc($papar_query_jenama)) {
+                // Check if the current product's jenama is in the selected brands array
+                $isChecked = in_array($senarai_jenama['idjenama'], $selectedBrands) ? 'checked' : '';
+                ?>
+                <!-- Display the product card -->
+                <div class="card">
+                    <img class="gambar" src="gambar/<?php echo $senarai_jenama['gambar']; ?>">
+                    <h3><?php echo $senarai_jenama['namaProduk']; ?></h3>
+                    <p class="price">Jenama : <?php echo $senarai_jenama['namaJenama']; ?></p>
+                    <p class="price">G3D : <?php echo $senarai_jenama['markahpenilaian'] ?></p>
+                    <p class="price">RM <?php echo $senarai_jenama['harga'] ?></p>
+                    <p>
+                        <form method="POST" action="pilihan_simpan.php">
+                            <input type="hidden" name="brands" value="<?php echo $selectedBrandsString; ?>">
+                            <input type="text" name="idproduk" value="<?php echo $senarai_jenama['idproduk']; ?>" hidden>
+                            <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                            <button name="submit" type="submit">PILIH</button></a>
+                        </form>
+                    </p>
+                </div>
+            <?php 
+            }
+            
+            echo '</div>';  // Close the card-container div
+        } else {
+            echo "Tiada produk dalam jenama ini dapat ditemui";
+        }
+        ?>
+    </body>
+</html>
+
+
+jenama_simpan.php:
+<?php require 'connect.php';
+
+if (isset($_POST['submit'])) {
+    $jenama = $_POST['jenama'];
+
+    // Prepare the SQL query to insert a new record into the "jenama" table
+    $baharu = "INSERT INTO jenama VALUES (NULL, '$jenama')";
+
+    // Execute the SQL query to insert the new record
+    $barangan = mysqli_query($connect, $baharu);
+
+    // Check if the insertion was successful and provide feedback to the user
+    if ($barangan) {
+        echo "<script> alert ('Penambahan Jenama BERJAYA'); window.location='jenama.php'</script>";
+    } else {
+        echo "<script> alert ('Penambahan Jenama GAGAL'); window.location='jenama_tambah.php'</script>";
+    }
+}
+?>
+
+
+jenama_tambah.php:
+<?php include 'header.php'; ?>
+<html>
+<div id="menu">
+    <?php include 'menu2.php'; ?>
+</div>
+<div id="isi">
+    <head>
+        <h2 style="text-align:center"> Tambah Jenama Baharu </h2>
+    </head>
+    <body>
+        <form method="POST" action="jenama_simpan.php">
+            <!-- Input field to enter the new "jenama" name -->
+            <p>Nama Jenama<br>
+            <input type="text" name="jenama" placeholder="Masukkan Nama Jenama" size="50" required autofocus></p><br>
+            
+            <div>
+                <!-- Submit button to save the new "jenama" -->
+                <button name="submit" type="submit"> SIMPAN </button>
+                <!-- Reset button to clear the input fields -->
+                <button type="reset"> RESET </button>
+            </div>
+
+            <!-- Information for users to ensure correct data entry -->
+            <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
+        </form>
+    </body>
+</div>
+</html>
+
+
+jenama.php:
+<?php include 'header.php'; ?>
+<html>
+<meta charset="UTF-8">
+<div id="menu">
+    <?php include 'menu2.php'; ?>
+</div>
+<div id="isi">
+    <body>
+        <center>
+            <h2> Senarai Jenama </h2>
+        </center>
+        <table class="table">
+            <!-- Table header to display column names -->
+            <tr id="row1">
+                <td>Bil</td>
+                <td>Nama Jenama</td>
+                <td>Tindakan
+                    <!-- Link to navigate to the import.php page with a file upload icon -->
+                    <a href="import.php" style="float:right;"> 📥 </a>
+                </td>
+            </tr>
+            <?php
+            // Fetch records from the "jenama" table and display them in the table
+            $no = 1; // Counter for serial number
+            $data1 = mysqli_query($connect, "SELECT * FROM jenama ORDER BY namaJenama ASC");
+            while ($info1 = mysqli_fetch_array($data1)) { ?>
+                <tr>
+                    <!-- Display the serial number -->
+                    <td><?php echo $no; ?></td>
+                    <!-- Display the "namaJenama" value from the "jenama" table -->
+                    <td><?php echo $info1['namaJenama']; ?></td>
+                    <td><!-- Actions column containing links -->
+                        <!-- Link to navigate to jenama_edit.php page for editing a specific jenama -->
+                        <a href="jenama_edit.php?id=<?php echo $info1["idjenama"]; ?>"> &#128393 </a>
+                        <!-- Link to navigate to jenama_hapus.php page for deleting a specific jenama -->
+                        <a href="jenama_hapus.php?id=<?php echo $info1["idjenama"]; ?>" onclick="return confirm('Anda Pasti?')"> &#10060 </a>
+                    </td>
+                </tr>
+                <?php $no++; // Increment the serial number counter
+            } ?>
+        </table>
+    </body>
+</div>
+</html>
+
+
+logout.php:
+<?php
+    session_start();
+    session_destroy(); // End the whole user session
+    header ("location:index.php"); // Head back to index.php for signin
+?>
+
+
+menu1.php:
+<html>
+<center>
+    <?php include 'signin.php'; ?> <!-- Include the content of signin.php in the center -->
+    <hr> <!-- Add a horizontal line -->
+    <p>Jika anda belum mendaftar, <br>klik <a href="signup.php"> DAFTAR </a></p>
+    <!-- Display a message with a link to the signup.php page -->
+</center>
+</html>
+
+
+menu2.php:
+<html>
+<?php session_start(); // Start the session to handle user authentication
+
+if ($_SESSION['level'] == "PENGGUNA") { // PENGGUNA menu ?>
+    <h3> Menu [<?php echo $_SESSION['nama']; ?>]</h3> <!-- Display the username of the logged-in user -->
+    <h4><ul>
+        <li><a href="dashboard.php">🏠Home</a></li><br>
+        <li><a href="produk.php">📃Senarai Produk</a></li>
+        <li><?php include 'jenama_menu.php'; ?></li> <!-- Include the content of jenama_menu.php, which is used to filter products by brand -->
+        <li><?php include 'produk_cari.php'; ?></li> <!-- Include the content of produk_cari.php, which is used to search for products -->
+        <br>
+        <li><a href="setting.php">⚙️Setting Akaun</a></li> <!-- Link to user account settings page -->
+        <li><a href="logout.php">🚪Log Keluar</a></li> <!-- Link to logout page to log out the user -->
+    </ul></h4>
+<?php } else { // ADMIN menu ?>
+    <h3> Menu [<?php echo $_SESSION['nama']; ?>] </h3>   <!-- Display the username of the logged-in admin -->
+    <h4><ul>
+        <li><a href="dashboard.php">🏠Home</a></li><br>
+        <li><a href="produk.php">📃Senarai Produk</a></li>
+        <li><a href="produk_tambah.php">➕Tambah Produk</a></li> <!-- Link to add new product page -->
+        <li><a href="jenama.php">📃Senarai Jenama</a></li>
+        <li><a href="jenama_tambah.php">➕Tambah Jenama</a></li> <!-- Link to add new brand page -->
+        <br>
+        <li><a href="pilihan.php">📋Pilihan Pengguna</a></li><br> <!-- Link to user selections page -->
+        <li><a href="setting.php">⚙️Setting Akaun</a></li> <!-- Link to admin account settings page -->
+        <li><a href="logout.php">🚪Log Keluar</a></li> <!-- Link to logout page to log out the admin -->
+    </ul></h4>
+<?php } ?>
+
+<!-- JavaScript function to ensure only one checkbox is selected at a time -->
+<script>
+    function onlyOne2(checkbox) {
+        var checkboxes = document.getElementsByName("brand")
+        checkbox.forEach((item) => {
+            if (item !== checkbox) item.checked = false
+        })
+    }
+</script>
+</html>
+
+
+pilihan_simpan.php:
+<?php
+    require 'connect.php'; // Include the database connection file to establish a connection
+
+    // Receive values from POST button "PILIH"
+    if (isset($_POST['submit'])) {
+        $idproduk = $_POST['idproduk']; // Get the product ID from the form
+        $pengguna = $_POST['idaccount']; // Get the user account ID from the form
+
+        // Insert a new record into the "rekod_pilihan" table
+        $baharu = "INSERT INTO rekod_pilihan VALUES (NULL, '$pengguna', '$idproduk')";
+        
+        // Execute the SQL query to insert the record
+        $pilihan = mysqli_query($connect, $baharu);
+
+        if ($pilihan) { // Check if the insertion was successful
+            // Redirect the user to the product detail page with the selected idproduk
+            echo "<script> window.location='produk_detail.php?idproduk=$idproduk'</script>";
+        } else {
+            // Display an alert and redirect the user to the dashboard page if the insertion fails
+            echo "<script> alert('Pilihan GAGAL direkodkan'); window.location:'dashboard.php' </script>";
+        }
+    }
+?>
+
+
+pilihan.php:
+<?php include 'header.php'; ?> <!-- Include the header file which contains the common heading code -->
+
+<html>
+<script src="print_util.js"></script> <!-- Include the JavaScript file for printing utility functions -->
+
+<div id="menu"> <!-- Call the menu -->
+    <?php include 'menu2.php'; ?> <!-- Include the menu2.php file to display the appropriate menu based on user role -->
+</div>
+
+<div id="isi"> <!-- Content section -->
+    <body>
+        <center>
+            <h2> Statistik Pilihan Pengguna </h2> <!-- Display the title for the statistics -->
+        </center>
+        <table class="table"> <!-- Create a table to display the statistics -->
+            <tr id="row1">
+                <td>Bil</td>
+                <td>Nama Produk</td>
+                <td>Jenama</td>
+                <td>Harga</td>
+                <td>Gambar</td>
+                <td>Bilangan</td>
+            </tr>
+            <?php
+            $no=1; // Initialize a counter for the table rows
+            // Query to fetch data from multiple tables and calculate the number of selections for each product
+            $data1 = mysqli_query($connect, "SELECT t2.namaProduk, COUNT(t1.idaccount) AS kira, t3.namaJenama, t2.harga, t2.gambar FROM rekod_pilihan AS t1 INNER JOIN produk AS t2 INNER JOIN jenama AS t3 ON t1.idproduk=t2.idproduk AND t3.idjenama=t2.idjenama GROUP BY t1.idproduk ORDER BY COUNT(t1.idaccount) DESC");
+            while ($info1 = mysqli_fetch_array($data1)) {
+            ?>
+                <tr>
+                    <td><?php echo $no; ?></td> <!-- Display the row number -->
+                    <td><?php echo $info1['namaProduk']; ?></td> <!-- Display the product name -->
+                    <td><?php echo $info1['namaJenama']; ?></td> <!-- Display the brand name -->
+                    <td>RM <?php echo $info1['harga']; ?></td> <!-- Display the product price -->
+                    <td><img class="gambar" src="gambar/<?php echo $info1['gambar']; ?>"></td> <!-- Display the product image -->
+                    <td><?php echo $info1['kira']; ?></td> <!-- Display the number of times the product has been selected -->
+                </tr>
+            <?php
+                $no++; // Increment the counter for the next row
+            }
+            ?>
+            <tr id="row1">
+                <td colspan="6">
+                    <center>
+                        <br>
+                        <font style='font-size:12px'>~~~~~ Senarai Tamat ~~~~~<br> <!-- Display the end of the list -->
+                        Jumlah Pilihan : <?php echo $no-1; ?> <!-- Display the total number of selections -->
+                        </font>
+                        <p><button onclick="printDiv('isi')"> CETAK </button></p> <!-- Button to print the content section -->
+                    </center>
+                </td>
+            </tr>
+        </table>
+    </body>
+</div>
+</html>
+
+
+print_util.js:
+function printDiv(divId) { // Declare a function named printDiv that takes a divId as a parameter
+    var printContents = document.getElementById(divId).innerHTML; // Get the inner HTML content of the specified div by its ID
+    var originalContents = document.body.innerHTML; // Store the original HTML content of the entire document body
+
+    document.body.innerHTML = printContents; // Replace the current document body content with the content of the specified div
+
+    setTimeout(function() { // Use setTimeout to delay the print action
+        window.print(); // Open the browser's print dialog to print the current content
+        document.body.innerHTML = originalContents; // Restore the original contents of the document body after printing
+    }, 100); // The setTimeout function sets a delay of 100 milliseconds before printing to give time to load the page
+}
+
+
+produk_cari.php:
+<form method="POST" action="produk_jumpa.php"> <!-- A form element with POST method and action set to "produk_jumpa.php" -->
+    🔍Carian Produk : <br> <!-- Text label for the search input -->
+    <input type="text" name="carian" size="15%" placeholder="" autofocus><br><br> <!-- Text input for user to enter search query -->
+    <button type="submit" name="cari"> SEARCH </button> <!-- Submit button to initiate the search -->
+</form>
+
+
+produk_detail.php:
+<?php include 'header.php'; // Include the header file which contains the common heading code
+
+$idproduk = $_GET['idproduk']; // Get the 'idproduk' value from the URL parameter
+
+// Fetch product details from the database using JOIN to get the product details along with the corresponding brand details
+$dataProduk = mysqli_query($connect, "SELECT * FROM produk AS t1 INNER JOIN jenama AS t2 ON t1.idjenama = t2.idjenama WHERE t1.idproduk = '$idproduk'");
+$qProduk = mysqli_fetch_array($dataProduk); // Fetch the product details as an associative array
+?>
+<html>
+<script src="print_util.js"></script> <!-- Include the print_util.js script for printing utility -->
+
+<div id="menu">
+    <?php include "menu2.php"; ?> <!-- Include the menu2.php file to display the menu -->
+</div>
+
+<div id="isi">
+    <body>
+        <center><h2> Deskripsi Produk </h2></center> <!-- Heading to display the product description -->
+        <img class="gambar2" src="gambar/<?php echo $qProduk['gambar']; ?>"> <!-- Display the product image using the 'gambar' value from the fetched product details -->
+        <font color="darkblue"><h2><?php echo $qProduk['namaProduk']; ?></h2></font> <!-- Display the product name using the 'namaProduk' value from the fetched product details -->
+        <p class="jenama"><b><?php echo $qProduk['namaJenama']; ?></b></p> <!-- Display the product brand using the 'namaJenama' value from the fetched product details -->
+        <p style="color:crimson" class="price"><b>Markah G3D: </b><?php echo $qProduk['markahpenilaian']; ?></p> <!-- Display the product rating using the 'markahpenilaian' value from the fetched product details -->
+        <p class="price"><?php echo $qProduk['deskripsi']; ?></p> <!-- Display the product description using the 'deskripsi' value from the fetched product details -->
+        <p class="price"><b>RM <?php echo $qProduk['harga']; ?></b></p> <!-- Display the product price using the 'harga' value from the fetched product details -->
+        <br>
+        <p class="price">Pautan Pembelian : <a href="<?php echo $qProduk['pautanpembelian']; ?>"><?php echo $qProduk['pautanpembelian']; ?></a></p> <!-- Display the purchase link for the product using the 'pautanpembelian' value from the fetched product details -->
+        <p>
+            <button onclick="printDiv('isi')"> CETAK </button> <!-- Button to print the product details -->
+            <button onclick="history.back()"> BALIK </button> <!-- Button to go back to the previous page -->
+        </p>
+    </body>
+</div>
+</html>
+
+
+produk_edit.php:
+<?php 
+include 'header.php'; // Include the header.php file to load common heading layout
+
+$idproduk = $_GET['id']; // Get the 'id' value from the URL parameter to identify the product to edit
+
+// Fetch product details from the database using JOIN to get the product details along with the corresponding jenama details
+$dataProduk = mysqli_query($connect, "SELECT * FROM produk AS t1 INNER JOIN jenama AS t2 ON t1.idjenama=t2.idjenama WHERE t1.idproduk='$idproduk'");
+$qProduk = mysqli_fetch_array($dataProduk); // Fetch the product details as an associative array
+?>
+<html>
+<div id="menu"> <!-- Display the menu -->
+    <?php include 'menu2.php'; ?>
+</div>
+
+<div id="isi">
+    <head>
+        <h2 style="text-align: center"> Edit Produk </h2>
+    </head>
+    <body>
+        <form method="POST" action="produk_kemaskini.php" enctype="multipart/form-data">
+            <!-- Input product information -->
+            <p>Nama Produk <br>
+                <input type="text" name="nama" value="<?php echo $qProduk['namaProduk']; ?>" size="50" required autofocus>
+            </p>
+
+            <p>Jenama <br>
+            <select name="jenama">
+                <?php
+                    // Display the current product brand as the selected option in the dropdown list
+                    echo "<option selected value='$qProduk[idjenama]'> $qProduk[namaJenama]</option>";
+                    // Fetch all brands from the 'jenama' table and display them as options in the dropdown list
+                    $jenama = mysqli_query($connect,"SELECT * FROM jenama");
+                    while ($pilihan = mysqli_fetch_array($jenama)) {
+                        echo "<option value='$pilihan[idjenama]'> $pilihan[namaJenama]</option>";
+                    }
+                ?>
+            </select>
+            </p>
+
+            <p>Harga <br>
+            RM <input type="text" name="harga" value="<?php echo $qProduk['harga']; ?>" size="46" required>
+            </p>
+
+            <p>Deskripsi Produk <br>
+            <font color='crimson'>* Pastikan anda tidak mengecualikan <br></font><br>
+            <textarea name="deskripsi" rows="10" cols="50" required><?php echo $qProduk['deskripsi'] ?></textarea>
+            </p>
+
+            <p>Gambar Produk <br>
+            <img class="gambar2" src="gambar/<?php echo $qProduk['gambar']; ?>"><br>
+            <?php $default = $qProduk['gambar'];?>
+            <font color='crimson'>* Hanya .jpg/.jpeg/.png diterima</font><br>
+            Tukar Gambar: <input type="file" name="gambar" accept=".jpg,.jpeg,.png" value="$default";>
+            </p>
+
+            <p>Pautan Pembelian Produk <br>
+            <textarea name="pautan" rows="2" cols="50" required><?php echo $qProduk['pautanpembelian']; ?>
+            </textarea>
+            </p>
+
+            <p>Markah G3D Produk <br>
+            <input type="text" name="markah" value="<?php echo $qProduk['markahpenilaian']; ?>" size="50" required>
+            </p>
+
+            <input type="text" name="id" value="<?php echo $qProduk['idproduk']; ?>" hidden> <!-- Hidden field to store the product ID -->
+            <br>
+
+            <button name="submit" type="submit"> SIMPAN </button> <!-- Button to submit the form and save the changes -->
+            <button onclick="history.back()"> BALIK </button> <!-- Button to go back to the previous page without saving changes -->
+            <br>
+            <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
+        </form>
+    </body>
+</div>
+</html>
+
+
+produk_hapus.php:
+<?php 
+include 'connect.php'; // Include the connection to the database
+
+$idpic = $_GET['pic']; // Get the 'pic' value from the URL parameter, which represents the name of the picture to be deleted
+$iddel = $_GET['id']; // Get the 'id' value from the URL parameter, which represents the ID of the product to be deleted
+
+// Delete the picture associated with the product
+unlink("gambar/".$idpic);
+
+// Delete the product from the 'produk' table in the database using the provided 'id'.
+mysqli_query($connect, "DELETE FROM produk WHERE idproduk='$iddel'");
+
+// Display an alert message indicating successful deletion and then redirect the user back to the 'produk.php' page.
+echo "<script> alert('Penghapusan Produk BERJAYA');window.location='produk.php'</script>";
+?>
+
+
+produk_jumpa.php:
+<?php include 'header.php'; // Include the header file for common page elements
+
+$jumpa = $_POST['carian']; // Get the search term from the form submission
+
+// Check if the search term is empty. If it is, display an alert and redirect back to the 'dashboard.php' page.
+if($jumpa == NULL) {
+    echo "<script> alert('Sila taipkan nama produk'); window.location='dashboard.php'</script>";
+}
+?>
+<html>
+<div id="menu">
+    <?php include 'menu2.php'; ?> <!-- Include the menu -->
+</div>
+<div id="isi">
+    <head>
+        <h2 style="text-align: center"> Hasil Carian Nama Produk </h2>
+    </head>
+    <body>
+        <?php
+            // Build the SQL query to search for products with names containing the search term
+            $query_jenama = "SELECT * FROM produk AS t1 INNER JOIN jenama AS t2 ON t1.idjenama=t2.idjenama WHERE t1.namaProduk LIKE '%$jumpa%' ORDER BY t1.namaProduk ASC";
+            $papar_query_jenama = mysqli_query($connect,$query_jenama);
+            echo '<div class="card-container">'; // Container for the card divs
+
+            // Check if there are any matching products based on the search term
+            if (mysqli_num_rows($papar_query_jenama)>0) {
+                foreach($papar_query_jenama as $senarai_jenama) {
+        ?>
+                    <div class="card">
+                        <img class="gambar" src="gambar/<?php echo $senarai_jenama['gambar']; ?>">
+                        <h3><?php echo $senarai_jenama['namaProduk']; ?></h3>
+                        <p class="price">Jenama : <?php echo $senarai_jenama['namaJenama']; ?></p>
+                        <p class="price">G3D : <?php echo $senarai_jenama['markahpenilaian']; ?></p>
+                        <p class="price">RM <?php echo $senarai_jenama['harga']; ?></p>
+
+                        <!-- Add a form to allow users to save their selection to the 'rekod_pilihan' table -->
+                        <p>
+                            <form method="POST" action="pilihan_simpan.php">
+                                <input type="text" name="idproduk" value="<?php echo $senarai_jenama['idproduk']; ?>" hidden>
+                                <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                                <button name="submit" type="submit"> PILIH </button>
+                            </form>
+                        </p>
+                    </div>
+            <?php
+                }
+            } else {
+                echo "Maaf, tiada produk yang bersesuaian dengan carian nama anda"; // Display a message if no matching products were found
+            }
+            echo '</div>';  // Close the card-container div
+            ?>
+    </body>
+</div>
+</html>
+
+
+produk_kemaskini.php:
+<?php require 'connect.php'; // Include the connection to the database
+
+if (isset($_POST['submit'])) {
+    // Retrieve data from the form submission
+    $id = $_POST['id'];
+    $nama = $_POST['nama'];
+    $jenama = $_POST['jenama'];
+    $harga = $_POST['harga'];
+    $deskripsi = $_POST['deskripsi'];
+    $pautan = $_POST['pautan'];
+    $markah = $_POST['markah'];
+
+    // Check if a new image is uploaded
+    if (!empty($_FILES['gambar']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION));
+        $newnamepic = date('Ymd_His') . "." . $ext;
+        $uploadPath = "gambar/" . $newnamepic;
+        $isUploaded = move_uploaded_file($_FILES['gambar']['tmp_name'], $uploadPath);
+        
+        // If the image upload fails, display an alert and redirect back to the 'produk_edit.php' page
+        if (!$isUploaded) {
+            echo "<script>alert('Gambar tidak dapat dimuat naik'); window.location='produk_edit.php?id=$id'</script>";
+            exit();
+        }
+        // Set the new image filename to be saved in the database
+        $gambar = $newnamepic;
+
+    } else {
+        // If no new image is uploaded, keep the existing image data from the database
+        $dataProduk = mysqli_query($connect, "SELECT * FROM produk WHERE idproduk='$id'");
+        $qProduk = mysqli_fetch_array($dataProduk);
+        $gambar = $qProduk['gambar'];
+    }
+
+    // Update the record with the new data, including the updated image filename
+    $result2 = mysqli_query($connect, "UPDATE produk SET namaProduk='$nama', idjenama='$jenama', harga='$harga', deskripsi='$deskripsi', gambar='$gambar', pautanpembelian='$pautan', markahpenilaian='$markah' WHERE idproduk='$id'");
+
+    echo "<script> alert('Kemaskini Produk BERJAYA');window.location='produk.php'</script>";
+} else {
+    // If the 'submit' button is not set, redirect back to the 'produk.php' page
+    echo "<script> window.location='produk.php'</script>";
+}
+?>
+
+
+produk_simpan.php:
+<?php require 'connect.php'; // Include the connection to the database
+
+if (isset($_POST['submit'])) {
+    // Retrieve data from the form submission
+    $nama = $_POST['nama'];
+    $jenama = $_POST['jenama'];
+    $harga = $_POST['harga'];
+
+    // Combine the detailed specifications into a formatted description
+    $det1 = $_POST['det1'];
+    $det2 = $_POST['det2'];
+    $det3 = $_POST['det3'];
+    $det4 = $_POST['det4'];
+    $det5 = $_POST['det5'];
+    $det6 = $_POST['det6'];
+    $det7 = $_POST['det7'];
+    $deskripsi = "Bus Interface: " . $det1 . " <br> " .
+                "Core Clock(s): " . $det2 . "MHz <br> " .
+                "Memory Size: " . $det3 . "GB <br> " .
+                "Memory Type: " . $det4 . " <br> " .
+                "DirectX: " . $det5 . " <br> " .
+                "OpenGL: " . $det6 . " <br> " .
+                "Release Date: " . $det7;
+
+    $pautan = $_POST['pautan'];
+    $markah = $_POST['markah'];
+
+    // Upload the image file and generate a new filename based on the current date and time
+    $ext = strtolower(pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION));
+    $newnamepic = date('Ymd_His') . "." . $ext;
+    $uploadPath = "gambar/" . $newnamepic;
+    $isUploaded = move_uploaded_file($_FILES['gambar']['tmp_name'], $uploadPath);
+
+    // If the image upload fails, display an alert and redirect back to the previous page
+    if (!$isUploaded) {
+        echo "<script>alert('Gambar tidak dapat dimuat naik'); window.location='produk_edit.php?id=$id'</script>";
+        exit();
+    }
+
+    // Insert the new product record into the 'produk' table
+    $baharu = "INSERT INTO produk VALUES (NULL,'$nama','$jenama','$harga','$deskripsi','$newnamepic','$pautan','$markah')";
+    $barangan = mysqli_query($connect, $baharu);
+
+    // Check if the product insertion is successful and display appropriate alert messages
+    if ($barangan){
+        echo "<script> alert('Tambahan Produk BERJAYA');window.location='produk.php'</script>";
+    } else {
+        echo "<script> alert('Tambahan Produk GAGAL');window.location='produk.php'</script>";
+    }
+}
+?>
+
+
+produk_tambah.php:
+<?php include 'header.php'; ?> <!-- Include the header of the page -->
+
+<html>
+<div id="menu"> <!-- Call the menu -->
+    <?php include 'menu2.php'; ?> <!-- Include the second menu based on user level -->
+</div>
+
+<div id="isi">
+    <head>
+        <h2 style="text-align: center"> Tambah Produk Baharu </h2>
+    </head>
+    <body>
+        <form method="POST" action="produk_simpan.php" enctype="multipart/form-data"> <!-- Form to submit new product data -->
+
+            <!-- Input for product information -->
+            <p>Nama Produk <br>
+            <input type="text" name="nama" placeholder="Masukkan Nama Produk" size="50" required autofocus>
+            </p>
+
+            <p>Jenama <br>
+            <select name="jenama">
+                <?php
+                    $jenama = mysqli_query($connect, "SELECT * FROM jenama");
+                    while ($pilihan = mysqli_fetch_array($jenama)) {
+                        echo "<option hidden selected> --PILIH-- </option>";
+                        echo "<option value='$pilihan[idjenama]'> $pilihan[namaJenama] </option>";
+                    }
+                ?>
+            </select>
+            <a href="jenama.php"> Senarai Jenama </a> <!-- Link to the list of jenama -->
+            </p>
+
+            <p>Harga <br>
+            RM <input type="text" name="harga" placeholder="00.00" size="46" required>
+            </p>
+
+            <p>Deskripsi Produk <br>
+            Bus Interface: <input type="text" name="det1" placeholder="Antaramuka bas GPU" size="37" required><br>
+            Core Clock(s): <input type="text" name="det2" placeholder="0000" size="20" required> MHz<br>
+            Memory Size: <input type="text" name="det3" placeholder="00000" size="20" required> GB<br>
+            Memory Type: <input type="text" name="det4" placeholder="GDDR6" size="20" required><br>
+            DirectX: <input type="text" name="det5" placeholder="12_2" size="10" required><br>
+            OpenGL: <input type="text" name="det6" placeholder="4.6" size="10" required><br>
+            Release Date: <input type="text" name="det7" placeholder="DD/MM/YYYY" size="37" required>
+            </p>
+
+            <p>Gambar Produk <br>
+            <font color='crimson'>* Hanya .jpg/.jpeg/.png diterima</font><br>
+            <input type="file" name="gambar" accept=".jpg,.jpeg,.png" required> <!-- File input for the product image -->
+            </p>
+
+            <p>Pautan Pembelian Produk <br>
+            <textarea name="pautan" placeholder="Masukkan URL Pembelian Produk" rows="2" cols="50" required></textarea>
+            </p>
+
+            <p>Markah G3D Produk<br>
+            <input type="text" name="markah" placeholder="Masukkan Markah G3D Produk" size="50" required>
+            </p>
+
+            <br>
+            <div>
+                <button name="submit" type="submit"> SIMPAN </button> <!-- Submit button to save the new product data -->
+                <button type="reset"> RESET </button> <!-- Reset button to clear the form data -->
+            </div>
+            <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font> <!-- Additional note for correct data entry -->
+        </form>
+    </body>
+</div>
+</html>
+
+
+produk.php:
+<?php include 'header.php'; ?> <!-- Include the header of the page -->
+
+<html>
+<meta charset="UTF-8">
+<script src="print_util.js"></script> <!-- Include the print utility script -->
+
+<!-- Call the menu -->
+<div id="menu">
+    <?php include 'menu2.php'; ?> <!-- Include the menu content -->
+</div>
+
+<!-- Table section for displaying product information -->
+<div id="isi">
+    <body>
+        <?php if ($_SESSION['level'] != "PENGGUNA") { ?> <!-- Display for admin (produk list) -->
+            <center><h2> Senarai Produk Semasa </h2></center>
+            
+            <!-- Display product information in a table -->
+            <table class="table">
+            <tr id="row1">
+                <td>Kedudukan</td>
+                <td>Nama Produk</td>
+                <td>Jenama</td>
+                <td>Harga</td>
+                <td>Deskripsi</td>
+                <td>Gambar</td>
+                <td id="shrinktd">Pautan</td>
+                <td>Markah G3D</td>
+                <td>Tindakan</td>
+            </tr>
+
+            <?php
+            $no = 1;
+            // Query to retrieve product information with brand details, ordered by G3D mark in descending order
+            $data1 = mysqli_query($connect, "SELECT * FROM produk AS t1 INNER JOIN jenama AS t2 ON t1.idjenama = t2.idjenama ORDER BY t1.markahpenilaian DESC");
+            while ($info1 = mysqli_fetch_array($data1)) {
+            ?>
+            <tr>
+                <td><?php echo $no; ?></td>
+                <td><?php echo $info1['namaProduk']; ?></td>
+                <td><?php echo $info1['namaJenama']; ?></td>
+                <td>RM <?php echo $info1['harga']; ?></td>
+                <td><?php echo $info1['deskripsi']; ?></td>
+                <td><img class="gambar" src="gambar/<?php echo $info1['gambar']; ?>"></td>
+                <td id="shrinktd"><?php echo $info1['pautanpembelian']; ?></td>
+                <td><?php echo $info1['markahpenilaian']; ?></td>
+                <td>
+                    <!-- Display edit and delete icons as links -->
+                    <a href="produk_edit.php?id=<?php echo $info1['idproduk']; ?>"> &#128393 </a> <!-- Edit icon -->
+                    <a href="produk_hapus.php?id=<?php echo $info1['idproduk']; ?>&pic=<?php echo $info1['gambar']; ?>" onclick="return confirm('Anda Pasti?')"> &#10060 </a> <!-- Delete icon -->
+                </td>
+            </tr>
+            <?php $no++; } ?>
+
+            <tr id="row1">
+                <td colspan="9"><center>
+                    <br>
+                    <font style="font-size:12px">~~~~~ Senarai Tamat ~~~~~<br />
+                        Jumlah Produk : <?php echo $no - 1; ?>
+                    </font>
+                    <p><button onclick="printDiv('isi')"> CETAK </button></p> <!-- Button to print the product list -->
+                </center></td>
+            </tr>
+            </table>
+        <?php } else { ?> <!-- Display for user (produk list) -->
+            <center><h2> Senarai Produk Semasa </h2></center>
+            
+            <!-- Display product information in a table -->
+            <table class="table">
+            <tr id="row1">
+                <td>Kedudukan</td>
+                <td>Nama Produk</td>
+                <td>Jenama</td>
+                <td>Harga</td>
+                <td>Gambar</td>
+                <td>Markah G3D</td>
+                <td></td>
+            </tr>
+
+            <?php
+            $no = 1;
+            // Query to retrieve product information with brand details, ordered by G3D mark in descending order
+            $data1 = mysqli_query($connect, "SELECT * FROM produk AS t1 INNER JOIN jenama AS t2 ON t1.idjenama = t2.idjenama ORDER BY t1.markahpenilaian DESC");
+            foreach ($data1 as $info1) {
+            ?>
+            <tr>
+                <td><?php echo $no; ?></td>
+                <td><?php echo $info1['namaProduk']; ?></td>
+                <td><?php echo $info1['namaJenama']; ?></td>
+                <td>RM <?php echo $info1['harga']; ?></td>
+                <td><img class="gambar" src="gambar/<?php echo $info1['gambar']; ?>"></td>
+                <td><?php echo $info1['markahpenilaian']; ?></td>
+                <td>
+                    <!-- Form to select and save the product as user's choice -->
+                    <p>
+                        <form method="POST" action="pilihan_simpan.php">
+                            <input type="text" name="idproduk" value="<?php echo $info1['idproduk']; ?>" hidden>
+                            <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                            <button name="submit" type="submit"> PILIH </button> <!-- Button to choose the product -->
+                        </form>
+                    </p>
+                </td>
+            </tr>
+            <?php $no++; } ?>
+
+            <tr id="row1">
+                <td colspan="7"><center>
+                    <br>
+                    <font style="font-size:12px">~~~~~ Senarai Tamat ~~~~~<br />
+                        Jumlah Produk : <?php echo $no - 1; ?>
+                    </font>
+                    <p><button onclick="printDiv('isi')"> CETAK </button></p> <!-- Button to print the product list -->
+                </center></td>
+            </tr>
+            </table>
+        <?php } ?>
+    </body>
+</div>
+</html>
+
+
+setting_proses.php:
+<?php require 'connect.php'; // Require the 'connect.php' file for database connection
+
+// Check if the form 'submit1' is submitted, which is for updating user's nama panggilan
+if (isset($_POST['submit1'])) {
+    $user = $_POST['idaccount']; // Get the user's ID
+    $nama = $_POST['nama']; // Get the new nama panggilan
+
+    // Update the user's nama panggilan in the database
+    $update = mysqli_query($connect, "UPDATE pengguna SET Namapanggilan='$nama' WHERE BINARY idaccount='$user'");
+    
+    // Check if the update is successful
+    if(mysqli_affected_rows($connect) > 0){
+        echo "<script> alert ('Pertukaran nama panggilan BERJAYA. Sila log masuk semula untuk melihat kesannya'); window.location='setting.php'</script>";
+    } else {
+        echo "<script> alert ('Pertukaran nama panggilan GAGAL. Sila guna nama yang lain'); window.location='setting.php'</script>";
+    }
+
+// Check if the form 'submit2' is submitted, which is for changing the user's password
+} elseif (isset($_POST['submit2'])) {
+    $user = $_POST['idaccount']; // Get the user's ID
+    $pass = mysqli_real_escape_string($connect, $_POST['password']); // Get the old password
+    $pass2 = mysqli_real_escape_string($connect, $_POST['password2']); // Get the new password
+    $pass3 = mysqli_real_escape_string($connect, $_POST['password3']); // Get the password confirmation
+
+    // Check if the old password matches the one in the database
+    $update = mysqli_query($connect, "SELECT * from pengguna WHERE BINARY idaccount='$user' and Password='$pass'");
+    $row = mysqli_fetch_assoc($update);
+
+    if ($row['Password'] == $pass) {
+        // Check if the new password and password confirmation match
+        if ($pass2 == $pass3) {
+            // Update the user's password in the database
+            $update = mysqli_query($connect, "UPDATE pengguna SET Password='$pass2' WHERE BINARY idaccount='$user'");
+            echo "<script> alert ('Pertukaran kata laluan BERJAYA'); window.location='setting.php'</script>";
+        } elseif ($pass2 != $pass3) {
+            echo "<script> alert ('Pertukaran kata laluan GAGAL. Kata Laluan Baharu dan Pengesahan Kata Laluan Baharu tidak sepadan'); window.location='setting.php'</script>";
+        } else {
+            echo "<script> alert ('Pertukaran kata laluan GAGAL. Sila guna kata laluan yang lain'); window.location='setting.php'</script>";
+        }
+    } else {
+        echo "<script> alert('Pertukaran kata laluan GAGAL. Kata laluan lama salah'); window.location='setting.php'</script>";
+    }
+
+// Check if the form 'submit3' is submitted, which is for deleting the user account
+} elseif (isset($_POST['submit3'])) {
+    $iddel = $_POST['idaccount']; // Get the user's ID
+
+    // Delete user from the database
+    $delete = mysqli_query($connect, "DELETE FROM pengguna WHERE BINARY idaccount='$iddel'");
+    
+    // Check if the delete operation is successful
+    if (mysqli_affected_rows($connect) > 0) {
+        session_destroy(); // Destroy the current session as the user account is deleted
+        echo "<script> alert('Penghapusan akaun BERJAYA'); window.location='index.php'</script>";
+    } else {
+        echo "<script> alert('Penghapusan akaun GAGAL. Sila cuba sekali lagi selepas sistem dibaiki'); window.location='setting.php'</script>";
+    }
+
+} else {
+    echo "<script> window.location='setting.php'</script>"; // Redirect to 'setting.php' if no form is submitted
+}
+?>
+
+
+setting.php:
+<?php require 'connect.php'; 
+include 'header.php'; // Include the header of the page
+?>
+<html>
+<meta charset="UTF-8">
+<!-- Call the menu -->
+<div id="menu">
+    <?php include 'menu2.php'; ?> <!-- Include the menu content -->
+</div>
+
+<!-- Content section for user settings -->
+<div id="isi">
+    <body>
+        <?php if ($_SESSION['level'] != "PENGGUNA") { ?> <!-- Display settings for admin -->
+            <center><h2> Setting Akaun <?php echo $_SESSION['nama']?> </h2></center>
+
+            <!-- Form section for changing the nama panggilan -->
+            <div class="doublecol">
+                <h3>Tukar Nama Panggilan</h3>
+
+                <form method="POST" action="setting_proses.php">
+                    <!-- Input field for new nama panggilan -->
+                    <p>Nama Panggilan Baharu <br>
+                    <input type="text" name="nama" placeholder="Sila masukkan nama panggilan baharu" maxlength="100" size="65" required>
+                    </p>
+
+                    <div>
+                        <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                        <!-- Buttons for submitting and resetting the form -->
+                        <button name="submit1" type="submit"> SIMPAN </button>
+                        <button type="reset"> RESET </button>
+                    </div>
+                    <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
+                </form>
+            </div>
+
+            <!-- Form section for changing the password -->
+            <div class="doublecol">
+                <h3>Tukar Kata Laluan</h3>
+
+                <form method="POST" action="setting_proses.php">
+                    <!-- Input fields for old password, new password, and password confirmation -->
+                    <p>Kata Laluan Lama <br>
+                    <input type="password" name="password" placeholder="Sila masukkan kata laluan lama" minlength="8" maxlength="255" size="65" required>
+                    </p>
+
+                    <p>Kata Laluan Baharu <br>
+                    <input type="password" name="password2" placeholder="Sila masukkan kata laluan baharu (Minimum 8 nombor/huruf)" minlength="8" maxlength="255" size="65" required>
+                    <br><br>
+                    <input type="password" name="password3" placeholder="Sila masukkan kata laluan baharu sekali lagi" minlength="8" maxlength="255" size="65" required>
+                    </p>
+
+                    <div>
+                        <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                        <!-- Buttons for submitting and resetting the form -->
+                        <button name="submit2" type="submit"> SIMPAN </button>
+                        <button type="reset"> RESET </button>
+                    </div>
+                    <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
+                </form>
+            </div>
+
+        <?php } else { ?> <!-- Display settings for user -->
+            <center><h2> Setting Akaun <?php echo $_SESSION['nama']?> </h2></center>
+
+            <!-- Form section for changing the nama panggilan -->
+            <div class="doublecol">
+                <h3>Tukar Nama Panggilan</h3>
+
+                <form method="POST" action="setting_proses.php">
+                    <!-- Input field for new nama panggilan -->
+                    <p>Nama Panggilan Baharu <br>
+                    <input type="text" name="nama" placeholder="Sila masukkan nama panggilan baharu" maxlength="100" size="65" required>
+                    </p>
+
+                    <div>
+                        <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                        <!-- Buttons for submitting and resetting the form -->
+                        <button name="submit1" type="submit"> SIMPAN </button>
+                        <button type="reset"> RESET </button>
+                    </div>
+                    <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
+                </form>
+            </div>
+
+            <!-- Form section for changing the password -->
+            <div class="doublecol">
+                <h3>Tukar Kata Laluan</h3>
+
+                <form method="POST" action="setting_proses.php">
+                    <!-- Input fields for old password, new password, and password confirmation -->
+                    <p>Kata Laluan Lama <br>
+                    <input type="password" name="password" placeholder="Sila masukkan kata laluan lama" minlength="8" maxlength="255" size="65" required>
+                    </p>
+
+                    <p>Kata Laluan Baharu <br>
+                    <input type="password" name="password2" placeholder="Sila masukkan kata laluan baharu (Minimum 8 nombor/huruf)" minlength="8" maxlength="255" size="65" required>
+                    <br><br>
+                    <input type="password" name="password3" placeholder="Sila masukkan kata laluan baharu sekali lagi" minlength="8" maxlength="255" size="65" required>
+                    </p>
+
+                    <div>
+                        <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                        <!-- Buttons for submitting and resetting the form -->
+                        <button name="submit2" type="submit"> SIMPAN </button>
+                        <button type="reset"> RESET </button>
+                    </div>
+                    <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font>
+                </form>
+            </div>
+
+            <!-- Form section for deleting the user account -->
+            <div class="doublecol">
+                <h3>Hapusan Akaun</h3>
+
+                <form method="POST" action="setting_proses.php">
+                    <!-- Button to initiate the account deletion with a confirmation prompt -->
+                    <br>
+                    <input type="text" name="idaccount" value="<?php echo $_SESSION['username']; ?>" hidden>
+                    <button name="submit3" type="submit" onclick="return confirm('Anda Pasti?')"> HAPUS </button><br>
+                    <font color='crimson'> * Maklumat berkaitan yang dihapuskan tidak dapat ditemui semula </font>
+                </form>
+            </div>
+
+        <?php } ?>
+    </body>
+</div>
+</html>
+
+
+signin_semak.php:
+<?php require 'connect.php'; // Include the file for database connection
+
+if (isset($_POST['username'])) { // Check if the form is submitted with the 'username' field
+
+    // Sanitize and store the input username and password from the form
+    $user = mysqli_real_escape_string($connect, $_POST['username']);
+    $pass = mysqli_real_escape_string($connect, $_POST['password']);
+
+    // Query the database to find the user with the provided credentials
+    $query = mysqli_query($connect, "SELECT * FROM pengguna WHERE BINARY idaccount='$user' AND Password='$pass'");
+    $row = mysqli_fetch_assoc($query);
+
+    if ($row['Password'] == $pass) { // If the password matches the one in the database
+
+        session_start(); // Start the session
+
+        // Store user information in session variables for later use
+        $_SESSION['username'] = $row['idaccount'];
+        $_SESSION['nama'] = $row['Namapanggilan'];
+        $_SESSION['level'] = $row['Aras'];
+
+        header("location: dashboard.php"); // Redirect the user to the dashboard page
+    } else {
+        // If the username or password is incorrect, show an error message and redirect to the login page
+        echo "<script> alert('ID pengguna atau kata laluan salah'); window.location='index.php'</script>";
+    }
+}
+?>
+
+
+signin.php:
+<center>
+    <h2> Log Masuk </h2>
+    <form method="POST" action="signin_semak.php"> <!-- The form will submit to signin_semak.php for authentication -->
+
+        <div>
+            <b>🔐ID Pengguna :  </b><br> <!-- Username input -->
+            <input type="text" name="username" placeholder="Sila isikan ID pengguna" maxlength="255" size="20" required autofocus />
+            <br>
+            <h3></h3>
+            <b>🔑Kata Laluan :  </b><br> <!-- Password input -->
+            <input type="password" name="password" placeholder="Sila masukkan kata laluan" maxlength="255" size="20" required autofocus />
+        </div>
+
+        <div> <!-- Submit & Reset buttons -->
+            <h2></h2>
+            <button name="SUBMIT" type="submit"> LOG IN </button> <!-- Log in button -->
+            <button type="reset"> RESET </button> <!-- Reset button to clear the form inputs -->
+        </div>
+    </form>
+</center>
+
+
+signup_simpan.php:
+<?php require 'connect.php'; // Include the file for database connection
+
+// Check if the form has been submitted
+if (isset($_POST['username'])) {
+    $idaccount = $_POST['username'];
+    $Password = $_POST['password'];
+    $Namapanggilan = $_POST['nama'];
+
+    // Check if the provided username already exists in the database
+    $query = mysqli_query($connect, "SELECT * FROM pengguna WHERE BINARY idaccount='$idaccount'");
+    if (mysqli_num_rows($query) > 0) {
+        // If the username already exists, show an alert and redirect to the signup.php page
+        echo "<script> alert ('Pendaftaran akaun GAGAL. ID Pengguna sudah dituntut'); window.location='signup.php'</script>";
+    } else {
+        // If the username is unique, insert the user data into the "pengguna" table in the database
+        $daftar1 = "INSERT INTO pengguna VALUES ('$idaccount','$Password','$Namapanggilan','PENGGUNA')";
+        $hasil1 = mysqli_query($connect, $daftar1);
+
+        if ($hasil1) {
+            // If the insertion is successful, show a success alert and redirect to the index.php page (login page)
+            echo "<script> alert ('Pendaftaran akaun BERJAYA'); window.location='index.php'</script>";
+        } else {
+            // If the insertion fails, show an error alert and redirect to the signup.php page
+            echo "<script> alert ('Pendaftaran akaun GAGAL. Sila daftar sekali lagi selepas sistem dibaiki'); window.location='signup.php'</script>";
+        }
+    }
+}
+?>
+
+
+signup.php:
+<?php include 'header.php' ?>
+<html>
+<br>
+<div>
+    <head>  <!-- Header as title -->
+        <h2 style="text-align:center">Pendaftaran Pengguna Baharu</h2>
+    </head>
+    <body>
+        <center>
+            <form method="POST" action="signup_simpan.php"> <!-- The form submits data to signup_simpan.php for processing -->
+                <!-- Input for ID Pengguna (username) -->
+                <p><b>🔐ID Pengguna :</b><br>
+                <input type="text" name="username" placeholder="ID yang mudah diingati" maxlength="50" size="60" required autofocus></p>
+
+                <!-- Input for Kata Laluan (password) -->
+                <p><b>🔑Kata Laluan :</b><br>
+                <input type="text" name="password" placeholder="Kata laluan anda (Minimum 8 nombor/huruf)" minlength="8" maxlength="255" size="60" required></p>
+
+                <!-- Input for Nama Panggilan (display name) -->
+                <p><b>🔖Nama Panggilan :</b><br>
+                <input type="text" name="nama" placeholder="Nama anda untuk dipanggil" maxlength="100" size="60" required></p>
+            
+                <div>   <!-- Buttons -->
+                    <button name="hantar" type="submit"> DAFTAR </button> <!-- Submit button to register the user -->
+                    <button type="reset"> PADAM </button> <!-- Reset button to clear form inputs -->
+            </form>
+                    <!-- Back button to return to the index.php (login page) -->
+                    <form action="index.php"><br>
+                        <button type="submit"> BALIK </button>
+                    </form>
+                </div>
+                <font color='green'> * Pastikan maklumat dimasukkan adalah betul </font> <!-- Note for the user -->
+        </center>
+    </body>
+</div>
+</html>
+
+
+utility.php:
+<!-- Link to an external css -->
+<link rel="stylesheet" href="style.css">
+
+<!-- Center-aligned buttons to change size and color -->
+<center>
+    <!-- Button to increase the font size -->
+    <button onClick="zoomIn()"> +A </button>
+    
+    <!-- Button to decrease the font size -->
+    <button onClick="zoomOut()"> -a </button>
+    
+    <!-- Button to toggle color mode (hidden initially) -->
+    <button id="color" onClick="toggleColorMode()" hidden> MODE </button>
+</center>
+
+<!-- Script section for color change functionality (currently hidden) -->
+<script>
+    // Function to toggle between light and dark color mode
+    function toggleColorMode() {
+        const currentColorMode = localStorage.getItem("colorMode");
+
+        if (currentColorMode === "dark") {
+            enableLightMode(); // Switch to light mode
+        } else {
+            enableDarkMode(); // Switch to dark mode
+        }
+    }
+
+    // Function to enable light mode
+    function enableLightMode() {
+        // Remove "data-theme" attribute to disable dark mode
+        document.documentElement.removeAttribute("data-theme");
+        document.body.style.color = "var(--text-color)"; // Set text color to custom variable
+        document.body.style.backgroundColor = "var(--bg-color)"; // Set background color to custom variable
+        
+        // Update table rows' background color to a custom variable
+        const tableRows = document.querySelectorAll("table tr");
+        tableRows.forEach(row => {
+            row.style.backgroundColor = "var(--table-color)";
+        });
+
+        // Update menu background color to a custom variable
+        const menu = document.getElementById("menu");
+        menu.style.backgroundColor = "var(--menu-color)";
+
+        localStorage.setItem("colorMode", "light"); // Store the current color mode in localStorage
+    }
+
+    // Function to enable dark mode
+    function enableDarkMode() {
+        // Add "data-theme" attribute to enable dark mode
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.body.style.color = "var(--text-color)"; // Set text color to custom variable
+        document.body.style.backgroundColor = "var(--bg-color)"; // Set background color to custom variable
+        
+        // Update table rows' background color to a custom variable
+        const tableRows = document.querySelectorAll("table tr");
+        tableRows.forEach(row => {
+            row.style.backgroundColor = "var(--table-color)";
+        });
+
+        // Update menu background color to a custom variable
+        const menu = document.getElementById("menu");
+        menu.style.backgroundColor = "var(--menu-color)";
+
+        localStorage.setItem("colorMode", "dark"); // Store the current color mode in localStorage
+    }
+</script>
+
+<!-- Script section for size change functionality -->
+<script>
+    // Variable to store the initial font size (1em)
+    var fontSize = 1;
+    
+    // Function to increase font size
+    function zoomIn() {
+        fontSize += 0.1; // Increase the font size by 0.1em
+        document.body.style.fontSize = fontSize + "em"; // Apply the new font size to the body element
+    }
+    
+    // Function to decrease font size
+    function zoomOut() {
+        fontSize -= 0.1; // Decrease the font size by 0.1em
+        document.body.style.fontSize = fontSize + "em"; // Apply the new font size to the body element
+    }
+</script>
+
+
+welcome.php:
+<html>
+<body>
+<center>
+    <h3 style="color:crimson">ISTIMEWA UNTUK ANDA!</h3>
+    <!-- Display products randomly -->
+    <?php 
+    // SQL query to retrieve 3 random products with their brand information
+    $query_rawak = "SELECT * FROM produk AS t1 INNER JOIN jenama AS t2 on t1.idjenama=t2.idjenama ORDER BY rand() LIMIT 3";
+    $papar_query_rawak = mysqli_query($connect, $query_rawak);
+
+    // Check if there are products to display
+    if(mysqli_num_rows($papar_query_rawak) > 0){
+        echo '<div class="card-container">'; // Start of the container to display product cards
+        
+        // Loop through the retrieved products
+        foreach($papar_query_rawak as $senarai_produk){ ?>
+            <!-- Display product card -->
+            <div class="card">
+                <!-- Display product image -->
+                <img class="gambar" src="gambar/<?php echo $senarai_produk['gambar']; ?>">
+                
+                <!-- Display product name -->
+                <h3><?php echo $senarai_produk['namaProduk']; ?></h3>
+                
+                <!-- Display brand name -->
+                <p><?php echo $senarai_produk['namaJenama']; ?></p>
+            </div>
+    <?php
+        }
+        echo "</div>"; // End of the container for product cards
+    } else {
+        echo "Tiada Produk"; // Displayed when there are no products to show
+    }
+    ?>
+</center>
+</body>
+</html>

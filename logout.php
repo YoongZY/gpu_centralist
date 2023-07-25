@@ -1,5 +1,5 @@
 <?php
     session_start();
-    session_destroy(); // end whole user session
-    header ("location:index.php"); // head to home
+    session_destroy(); // End the whole user session
+    header ("location:index.php"); // Head back to index.php for signin
 ?>
