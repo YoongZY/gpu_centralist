@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2023 at 03:12 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Jul 26, 2023 at 07:31 AM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `jenama` (
   `idjenama` int(3) NOT NULL,
   `namaJenama` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `jenama`
@@ -52,7 +52,7 @@ CREATE TABLE `pengguna` (
   `Password` varchar(255) NOT NULL,
   `Namapanggilan` varchar(100) DEFAULT NULL,
   `Aras` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pengguna`
@@ -78,7 +78,7 @@ CREATE TABLE `produk` (
   `gambar` varchar(255) DEFAULT NULL,
   `pautanpembelian` varchar(255) DEFAULT NULL,
   `markahpenilaian` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `produk`
@@ -88,10 +88,12 @@ INSERT INTO `produk` (`idproduk`, `namaProduk`, `idjenama`, `harga`, `deskripsi`
 (15, 'GeForce RTX 4090', 5, '8400', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2230 MHz <br> Memory Size: 24 GB <br> Memory Type: GDDR6X <br> DirectX: 12 <br> OpenGL: 4.6 <br> Release Date: 12/10/2022', '20230720_171048.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4090/                                                            ', 39087),
 (16, 'GeForce RTX 4080', 5, '6300', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2205 MHz <br> Memory Size: 16 GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 20/09/2022', '20230720_171158.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4080/                        ', 35017),
 (17, 'Radeon PRO W7800', 4, '-', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855 MHz <br> Memory Size: 32 GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 13/04/2023', '20230720_171935.jpg', 'NA                        ', 32146),
-(18, 'GeForce RTX 4070 Ti', 5, '3959', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2310MHz <br> Memory Size: 12GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/01/2023', '20230720_173011.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4070-4070ti/', 31668),
-(19, 'Radeon RX 7900 XTX', 4, '1000', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855MHz <br> Memory Size: 24GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/11/2022', '20230722_041002.jpg', 'https://www.amd.com/en/products/graphics/amd-radeon-rx-7900xtx', 31522),
-(20, 'Radeon PRO W7900', 4, '18239', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855MHz <br> Memory Size: 48GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 13/04/2023', '20230722_041833.jpg', 'https://www.amd.com/en/products/professional-graphics/amd-radeon-pro-w7900', 31126),
-(21, 'GeForce RTX 3090 Ti', 5, '9700', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1560MHz <br> Memory Size: 24GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 27/01/2022', '20230722_042426.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/30-series/rtx-3090-3090ti/', 29824);
+(18, 'GeForce RTX 4070 Ti', 5, '3959', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 2310 MHz <br> Memory Size: 12 GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/01/2023', '20230720_173011.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/40-series/rtx-4070-4070ti/            ', 31668),
+(19, 'Radeon RX 7900 XTX', 4, '1000', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855 MHz <br> Memory Size: 24 GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/11/2022', '20230722_041002.jpg', 'https://www.amd.com/en/products/graphics/amd-radeon-rx-7900xtx            ', 31522),
+(20, 'Radeon PRO W7900', 4, '18239', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1855 MHz <br> Memory Size: 48 GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 13/04/2023', '20230722_041833.jpg', 'https://www.amd.com/en/products/professional-graphics/amd-radeon-pro-w7900            ', 31126),
+(21, 'GeForce RTX 3090 Ti', 5, '9700', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1560 MHz <br> Memory Size: 24 GB <br> Memory Type: GDDR6X <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 27/01/2022', '20230722_042426.jpg', 'https://www.nvidia.com/en-my/geforce/graphics-cards/30-series/rtx-3090-3090ti/            ', 29824),
+(22, 'Radeon RX 7900 XT', 4, '4599', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1500 MHz <br> Memory Size: 20 GB <br> Memory Type: GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 03/11/2022', '20230726_063031.jpg', 'https://www.aorus.com/en-my/graphics-cards/radeon-rx-7900-xtx                        ', 29149),
+(23, 'Radeon RX 6950 XT', 4, '7099', 'Bus Interface: PCIe 4.0 x16 <br> Core Clock(s): 1860 MHz <br> Memory Size: 16 GB <br> Memory Type:  GDDR6 <br> DirectX: 12_2 <br> OpenGL: 4.6 <br> Release Date: 10/05/2022', '20230726_063356.jpg', 'https://www.amd.com/en/products/graphics/amd-radeon-rx-6950-xt            ', 28815);
 
 -- --------------------------------------------------------
 
@@ -103,7 +105,7 @@ CREATE TABLE `rekod_pilihan` (
   `idrekod` int(6) NOT NULL,
   `idaccount` varchar(255) DEFAULT NULL,
   `idproduk` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rekod_pilihan`
@@ -118,13 +120,16 @@ INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
 (63, '1', 15),
 (65, '1', 15),
 (66, '1', 15),
+(69, '1', 15),
 (52, '1', 16),
 (54, '1', 16),
 (64, '1', 16),
+(70, '1', 16),
 (53, '1', 17),
 (61, '1', 21),
 (62, '1', 21),
-(67, '1', 21);
+(67, '1', 21),
+(68, '1', 21);
 
 --
 -- Indexes for dumped tables
@@ -171,13 +176,13 @@ ALTER TABLE `jenama`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `idproduk` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idproduk` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- Constraints for dumped tables

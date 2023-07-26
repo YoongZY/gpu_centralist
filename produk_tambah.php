@@ -37,7 +37,7 @@
             <p>Deskripsi Produk <br>
             Bus Interface: <input type="text" name="det1" placeholder="Antaramuka bas GPU" size="37" required><br>
             Core Clock(s): <input type="text" name="det2" placeholder="0000" size="20" required> MHz<br>
-            Memory Size: <input type="text" name="det3" placeholder="00000" size="20" required> GB<br>
+            Memory Size: <input type="text" name="det3" placeholder="00" size="20" required> GB<br>
             Memory Type: <input type="text" name="det4" placeholder="GDDR6" size="20" required><br>
             DirectX: <input type="text" name="det5" placeholder="12_2" size="10" required><br>
             OpenGL: <input type="text" name="det6" placeholder="4.6" size="10" required><br>

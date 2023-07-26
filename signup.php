@@ -10,7 +10,7 @@
             <form method="POST" action="signup_simpan.php"> <!-- The form submits data to signup_simpan.php for processing -->
                 <!-- Input for ID Pengguna (username) -->
                 <p><b>🔐ID Pengguna :</b><br>
-                <input type="text" name="username" placeholder="ID yang mudah diingati" maxlength="50" size="60" required autofocus></p>
+                <input type="text" name="username" placeholder="ID yang mudah diingati (Maximum 50 nombor/huruf)" maxlength="50" size="60" required autofocus></p>
 
                 <!-- Input for Kata Laluan (password) -->
                 <p><b>🔑Kata Laluan :</b><br>

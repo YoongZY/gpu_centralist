@@ -19,7 +19,7 @@ $qProduk = mysqli_fetch_array($dataProduk); // Fetch the product details as an a
         <img class="gambar2" src="gambar/<?php echo $qProduk['gambar']; ?>"> <!-- Display the product image using the 'gambar' value from the fetched product details -->
         <font color="darkblue"><h2><?php echo $qProduk['namaProduk']; ?></h2></font> <!-- Display the product name using the 'namaProduk' value from the fetched product details -->
         <p class="jenama"><b><?php echo $qProduk['namaJenama']; ?></b></p> <!-- Display the product brand using the 'namaJenama' value from the fetched product details -->
-        <p style="color:crimson" class="price"><b>Markah G3D: </b><?php echo $qProduk['markahpenilaian']; ?></p> <!-- Display the product rating using the 'markahpenilaian' value from the fetched product details -->
+        <h3 style="color:crimson" class="price"><b>Markah G3D: </b><?php echo $qProduk['markahpenilaian']; ?></h3> <!-- Display the product rating using the 'markahpenilaian' value from the fetched product details -->
         <p class="price"><?php echo $qProduk['deskripsi']; ?></p> <!-- Display the product description using the 'deskripsi' value from the fetched product details -->
         <p class="price"><b>RM <?php echo $qProduk['harga']; ?></b></p> <!-- Display the product price using the 'harga' value from the fetched product details -->
         <br>

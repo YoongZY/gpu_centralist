@@ -15,8 +15,8 @@ if (isset($_POST['submit'])) {
     $det6 = $_POST['det6'];
     $det7 = $_POST['det7'];
     $deskripsi = "Bus Interface: " . $det1 . " <br> " .
-                "Core Clock(s): " . $det2 . "MHz <br> " .
-                "Memory Size: " . $det3 . "GB <br> " .
+                "Core Clock(s): " . $det2 . " MHz <br> " .
+                "Memory Size: " . $det3 . " GB <br> " .
                 "Memory Type: " . $det4 . " <br> " .
                 "DirectX: " . $det5 . " <br> " .
                 "OpenGL: " . $det6 . " <br> " .
