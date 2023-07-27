@@ -42,7 +42,7 @@ $qProduk = mysqli_fetch_array($dataProduk); // Fetch the product details as an a
             </p>
 
             <p>Deskripsi Produk <br>
-            <font color='crimson'>* Pastikan anda tidak mengecualikan <br></font><br>
+            <font color='crimson'>* Pastikan anda tidak mengecualikan < br ></font><br>
             <textarea name="deskripsi" rows="10" cols="50" required><?php echo $qProduk['deskripsi'] ?></textarea>
             </p>
 

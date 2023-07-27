@@ -1,12 +1,12 @@
 <?php include 'header.php'; // Include the "header.php" file to add common header content
 
 // Check if any brands are selected from the previous page (harga_menu.php)
-if (isset($_POST['brands'])) {
-    $selectedBrandsString = $_POST['brands'];
-    $selectedBrands = explode(',', $selectedBrandsString);
-} else {
+if (empty($_POST['brands'])) {
     // Handle the case when no brands are selected
     $selectedBrands = [];
+} else {
+    $selectedBrandsString = $_POST['brands'];
+    $selectedBrands = explode(',', $selectedBrandsString);
 }
 
 if (isset($_POST['pilih'])) { // Check if the "SEARCH" button is clicked
@@ -21,7 +21,6 @@ if (isset($_POST['pilih'])) { // Check if the "SEARCH" button is clicked
         $query_produk = "SELECT * FROM jenama AS t1 INNER JOIN produk AS t2 ON t1.idjenama = t2.idjenama";
         
         if (!empty($selectedBrands)) {
-            $selectedBrandsString = implode(',', $selectedBrands);
             $query_produk .= " WHERE t1.idjenama IN ($selectedBrandsString)";
         }
         

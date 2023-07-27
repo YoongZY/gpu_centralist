@@ -8,13 +8,13 @@
                 Bermula RM
                 <input type="text" name="harga1" size="5" placeholder="1000.00" onkeypress='return event.charCode>=48 && event.charCode<=57' autofocus>
                 hingga RM
-                <input type="text" name="harga2" size="5" placeholder="2000.00" onkeypress='return event.charCode>=48 && event.charCode<=57' size="5">
+                <input type="text" name="harga2" size="5" placeholder="2000.00" onkeypress='return event.charCode>=48 && event.charCode<=57' autofocus>
             </div>
 
-            <h5><button name="pilih" type="submit"> SEARCH </button></h5> <!-- Submit button to trigger the search -->
-            
             <!-- Hidden input field to store selected brands -->
             <input type="hidden" name="brands" value="<?php echo $selectedBrandsString; ?>">
+
+            <h5><button name="pilih" type="submit"> SEARCH </button></h5> <!-- Submit button to trigger the search -->
         </form>
     </div>
 </center>

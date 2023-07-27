@@ -4,7 +4,7 @@ $jumpa = $_POST['carian']; // Get the search term from the form submission
 
 // Check if the search term is empty. If it is, display an alert and redirect back to the 'dashboard.php' page.
 if($jumpa == NULL) {
-    echo "<script> alert('Sila taipkan nama produk'); window.location='dashboard.php'</script>";
+    echo "<script> alert('Sila masukkan nama produk'); window.location='dashboard.php'</script>";
 }
 ?>
 <html>

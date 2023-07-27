@@ -90,7 +90,7 @@ include 'header.php'; // Include the header of the page
                 <form method="POST" action="setting_proses.php">
                     <!-- Input fields for old password, new password, and password confirmation -->
                     <p>Kata Laluan Lama <br>
-                    <input type="password" name="password" placeholder="Sila masukkan kata laluan lama" minlength="8" maxlength="255" size="65" required>
+                    <input type="password" name="password" placeholder="Sila masukkan kata laluan lama" maxlength="255" size="65" required>
                     </p>
 
                     <p>Kata Laluan Baharu <br>

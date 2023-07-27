@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2023 at 07:31 AM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 7.3.27
+-- Generation Time: Jul 27, 2023 at 12:43 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `jenama` (
   `idjenama` int(3) NOT NULL,
   `namaJenama` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `jenama`
@@ -52,15 +52,15 @@ CREATE TABLE `pengguna` (
   `Password` varchar(255) NOT NULL,
   `Namapanggilan` varchar(100) DEFAULT NULL,
   `Aras` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengguna`
 --
 
 INSERT INTO `pengguna` (`idaccount`, `Password`, `Namapanggilan`, `Aras`) VALUES
-('1', '2', 'Yoong', 'PENGGUNA'),
-('admin', '12345678', 'ADMIN', ''),
+('1', '87654321', 'Yoong', 'PENGGUNA'),
+('admin', 'admin2023', 'ADMIN', ''),
 ('test', 'qwertyui', 'Test', 'PENGGUNA');
 
 -- --------------------------------------------------------
@@ -78,7 +78,7 @@ CREATE TABLE `produk` (
   `gambar` varchar(255) DEFAULT NULL,
   `pautanpembelian` varchar(255) DEFAULT NULL,
   `markahpenilaian` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `produk`
@@ -105,7 +105,7 @@ CREATE TABLE `rekod_pilihan` (
   `idrekod` int(6) NOT NULL,
   `idaccount` varchar(255) DEFAULT NULL,
   `idproduk` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rekod_pilihan`
@@ -121,6 +121,7 @@ INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
 (65, '1', 15),
 (66, '1', 15),
 (69, '1', 15),
+(71, '1', 15),
 (52, '1', 16),
 (54, '1', 16),
 (64, '1', 16),
@@ -170,7 +171,7 @@ ALTER TABLE `rekod_pilihan`
 -- AUTO_INCREMENT for table `jenama`
 --
 ALTER TABLE `jenama`
-  MODIFY `idjenama` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idjenama` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -182,7 +183,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- Constraints for dumped tables
