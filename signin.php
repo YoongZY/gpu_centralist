@@ -4,7 +4,16 @@
 
         <div>
             <b>🔐ID Pengguna :  </b><br> <!-- Username input -->
-            <input type="text" name="username" placeholder="Sila isikan ID pengguna" maxlength="255" size="20" required autofocus />
+            <input onblur="checkLength(this)" type="text" name="username" placeholder="Sila isikan ID pengguna" maxlength="30" size="20" required autofocus />
+            
+            <script>
+                function checkLength (e1){
+                    if (e1.value.length == 30){
+                        alert ("Panjang ID pengguna sudah maksimum")
+                    }
+                }
+            </script>
+
             <br>
             <h3></h3>
             <b>🔑Kata Laluan :  </b><br> <!-- Password input -->

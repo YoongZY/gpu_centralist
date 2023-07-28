@@ -10,9 +10,18 @@ if (empty($_POST['brands'])) {
 }
 
 if (isset($_POST['pilih'])) { // Check if the "SEARCH" button is clicked
-    if (empty($_POST['harga1']) || empty($_POST['harga2'])) {
+    if (!is_numeric($_POST['harga1'])) {
+        // If the price input is not an integer, show an alert and redirect back to dashboard.php
+        echo "<script> alert('Harga tidak boleh mengandungi abjad'); window.location='dashboard.php'</script>";
+
+    } elseif (($_POST['harga1'])=="0") {
+        // If the price input = 0, show an alert and redirect back to dashboard.php
+        echo "<script> alert('Harga tidak boleh = 0'); window.location='dashboard.php'</script>";
+
+    } elseif (empty($_POST['harga1']) || empty($_POST['harga2'])) {
         // If the price range is not provided, show an alert and redirect back to dashboard.php
-        echo "<script>alert('Sila masukkan julat harga'); window.location='dashboard.php'</script>";
+        echo "<script> alert('Sila masukkan julat harga'); window.location='dashboard.php'</script>";
+
     } else {
         $pilih1 = $_POST['harga1'];
         $pilih2 = $_POST['harga2'];

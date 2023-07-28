@@ -16,7 +16,7 @@
     </head>
     <body>
         <form method="POST" action="jenama_kemaskini.php"> <!-- A form to update the Jenama data and submit it to "jenama_kemaskini.php" -->
-            <p>JENAMA<br>
+            <p>Nama Jenama<br>
             <input type="text" name="nama" value="<?php echo $qJenama['namaJenama']; ?>" size="50" required autofocus></p> <!-- Display an input field with the current Jenama name to allow editing -->
             <input type="text" name="id" value="<?php echo $qJenama['idjenama']; ?>" hidden> <!-- A hidden input field to store the Jenama ID for identification during the update process -->
             <br>

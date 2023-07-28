@@ -26,10 +26,10 @@ if (isset($_FILES['file'])) { // Check if a file has been uploaded via the form
 
         if ($successes > 0) {
             // If at least one row was successfully inserted, display a success message and redirect to "jenama.php"
-            echo "<script>alert('Pindah naik fail CSV BERJAYA. Jumlah baris berjaya dimasukkan: $successes'); window.location='jenama.php'</script>";
+            echo "<script>alert('Pindah naik fail CSV BERJAYA. Jumlah jenama berjaya dimasukkan: $successes'); window.location='jenama.php'</script>";
         } else {
             // If no rows were inserted, display an error message and redirect back to "jenama.php"
-            echo "<script>alert('Pindah naik fail CSV GAGAL. Tiada baris berjaya dimasukkan.'); window.location='jenama.php'</script>";
+            echo "<script>alert('Pindah naik fail CSV GAGAL. Tiada jenama berjaya dimasukkan.'); window.location='jenama.php'</script>";
         }
     }
 } else {
