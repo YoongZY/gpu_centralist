@@ -1,8 +1,10 @@
 function printDiv(divId) { // Declare a function named printDiv that takes a divId as a parameter
-    var printContents = document.getElementById(divId).innerHTML; // Get the inner HTML content of the specified div by its ID
+    // Get the inner HTML content of the specified div by its ID
+    var printContents = document.getElementById(divId).innerHTML; 
     var originalContents = document.body.innerHTML; // Store the original HTML content of the entire document body
 
-    document.body.innerHTML = printContents; // Replace the current document body content with the content of the specified div
+    // Replace the current document body content with the content of the specified div
+    document.body.innerHTML = printContents; 
 
     setTimeout(function() { // Use setTimeout to delay the print action
         window.print(); // Open the browser's print dialog to print the current content

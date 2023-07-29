@@ -1,8 +1,8 @@
 <?php 
 include 'connect.php'; // Include the connection to the database
 
-$idpic = $_GET['pic']; // Get the 'pic' value from the URL parameter, which represents the name of the picture to be deleted
-$iddel = $_GET['id']; // Get the 'id' value from the URL parameter, which represents the ID of the product to be deleted
+$idpic = $_GET['pic']; // Get the 'pic' value from the URL parameter
+$iddel = $_GET['id']; // Get the 'id' value from the URL parameter
 
 // Delete the picture associated with the product
 unlink("gambar/".$idpic);

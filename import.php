@@ -17,7 +17,7 @@
             <font color=green> File mesti dalam bentuk .CSV </font> <!-- Instruction for the file format -->
         </form>
         <br><br>
-        <b>","</b> & <b>"(ENTER)"</b> boleh digunakan sebagai pemisahan data
+        <b>","</b> & <b>"(ENTER)"</b> boleh digunakan untuk pemisahan data
         <h4>Contoh fail: </h4> <!-- Example CSV file format -->
         JENAMA1,JENAMA2,JENAMA3<br>
         JENAMA4,JENAMA5,JENAMA6<br>
