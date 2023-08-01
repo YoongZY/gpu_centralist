@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2023 at 06:00 AM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 7.3.27
+-- Generation Time: Aug 01, 2023 at 02:57 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `jenama` (
   `idjenama` int(3) NOT NULL,
   `namaJenama` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `jenama`
@@ -52,7 +52,7 @@ CREATE TABLE `pengguna` (
   `Password` varchar(255) NOT NULL,
   `Namapanggilan` varchar(100) DEFAULT NULL,
   `Aras` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengguna`
@@ -79,7 +79,7 @@ CREATE TABLE `produk` (
   `gambar` varchar(255) DEFAULT NULL,
   `pautanpembelian` varchar(255) DEFAULT NULL,
   `markahpenilaian` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `produk`
@@ -105,7 +105,7 @@ CREATE TABLE `rekod_pilihan` (
   `idrekod` int(6) NOT NULL,
   `idaccount` varchar(255) DEFAULT NULL,
   `idproduk` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rekod_pilihan`
@@ -122,11 +122,14 @@ INSERT INTO `rekod_pilihan` (`idrekod`, `idaccount`, `idproduk`) VALUES
 (66, '1', 15),
 (69, '1', 15),
 (71, '1', 15),
+(74, '1', 15),
+(75, '1', 15),
 (52, '1', 16),
 (54, '1', 16),
 (64, '1', 16),
 (70, '1', 16),
 (53, '1', 17),
+(73, '1', 19),
 (61, '1', 21),
 (62, '1', 21),
 (67, '1', 21),
@@ -184,7 +187,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `rekod_pilihan`
 --
 ALTER TABLE `rekod_pilihan`
-  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `idrekod` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- Constraints for dumped tables

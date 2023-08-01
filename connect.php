@@ -1,8 +1,8 @@
-<?php
-$host = "localhost";            // Database host
-$user = "root";                 // Database username
-$password = "";                 // Database password
-$database = "gpu_centralist";   // Name of the database to be used
+<?php //connect.php
+$host = "localhost";            // Database host that links files to the database
+$user = "root";                 // Database username of phpMySQL
+$password = "";                 // Database password of phpMySQL = null
+$database = "gpu_centralist";   // Name of the database
 
 // Establishing a database connection
 $connect = mysqli_connect($host, $user, $password, $database);
