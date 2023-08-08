@@ -14,4 +14,4 @@ Questions:
 - how integrate namaJenama into rekod_pilihan [database problem?] 						{solved}
 - how to remake light/dark & zoom mode so can save setting [utility.php]					{cancelled}
 - how to print specific div when click CETAK									{solved}
-- how to show checkmark on jenama_menu after go into jenama_harga (solve b4 in jenama_pilihan but now dk how)	
+- how to show checkmark on jenama_menu after go into jenama_harga (solve b4 in jenama_pilihan but now dk how)	{cancelled}

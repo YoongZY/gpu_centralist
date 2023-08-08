@@ -19,7 +19,8 @@ if (isset($_POST['username'])) { // Check if the form is submitted with the 'use
         $_SESSION['nama'] = $row['Namapanggilan'];
         $_SESSION['level'] = $row['Aras'];
 
-        header("location: dashboard.php"); // Redirect the user to the dashboard page
+        // If the insertion is successful, show a success alert and redirect to the dashboard.php page
+        echo "<script> alert ('Log masuk akaun BERJAYA'); window.location='dashboard.php'</script>";
     } else {
         // If the username or password is incorrect, show an error message and redirect to the login page
         echo "<script> alert('ID pengguna atau kata laluan salah'); window.location='index.php'</script>";

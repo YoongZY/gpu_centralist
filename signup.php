@@ -15,7 +15,7 @@
                 <script>
                     function checkLength (e1){
                         if (e1.value.length == 30){
-                            alert ("Panjang ID pengguna sudah maksimum")
+                            alert ("Panjang ID pengguna sudah mencapai maksimum")
                         }
                     }
                 </script>

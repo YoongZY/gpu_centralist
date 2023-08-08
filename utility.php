@@ -9,61 +9,16 @@
     <!-- Button to decrease the font size -->
     <button onClick="zoomOut()"> -a </button>
     
-    <!-- Button to toggle color mode (hidden initially) -->
-    <button id="color" onClick="toggleColorMode()" hidden> MODE </button>
+    <!-- Button to toggle color mode -->
+    <button id="color" onClick="toggleColorMode()"> WARNA </button>
 </center>
 
 <!-- Script section for color change functionality (currently hidden) -->
 <script>
     // Function to toggle between light and dark color mode
     function toggleColorMode() {
-        const currentColorMode = localStorage.getItem("colorMode");
-
-        if (currentColorMode === "dark") {
-            enableLightMode(); // Switch to light mode
-        } else {
-            enableDarkMode(); // Switch to dark mode
-        }
-    }
-
-    // Function to enable light mode
-    function enableLightMode() {
-        // Remove "data-theme" attribute to disable dark mode
-        document.documentElement.removeAttribute("data-theme");
-        document.body.style.color = "var(--text-color)"; // Set text color to custom variable
-        document.body.style.backgroundColor = "var(--bg-color)"; // Set background color to custom variable
-        
-        // Update table rows' background color to a custom variable
-        const tableRows = document.querySelectorAll("table tr");
-        tableRows.forEach(row => {
-            row.style.backgroundColor = "var(--table-color)";
-        });
-
-        // Update menu background color to a custom variable
-        const menu = document.getElementById("menu");
-        menu.style.backgroundColor = "var(--menu-color)";
-
-        localStorage.setItem("colorMode", "light"); // Store the current color mode in localStorage
-    }
-
-    // Function to enable dark mode
-    function enableDarkMode() {
-        // Add "data-theme" attribute to enable dark mode
-        document.documentElement.setAttribute("data-theme", "dark");
-        document.body.style.color = "var(--text-color)"; // Set text color to custom variable
-        document.body.style.backgroundColor = "var(--bg-color)"; // Set background color to custom variable
-        
-        // Update table rows' background color to a custom variable
-        const tableRows = document.querySelectorAll("table tr");
-        tableRows.forEach(row => {
-            row.style.backgroundColor = "var(--table-color)";
-        });
-
-        // Update menu background color to a custom variable
-        const menu = document.getElementById("menu");
-        menu.style.backgroundColor = "var(--menu-color)";
-
-        localStorage.setItem("colorMode", "dark"); // Store the current color mode in localStorage
+        var element = document.body;
+        element.classList.toggle("dark-mode");
     }
 </script>
 
